@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -10,7 +10,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ethers } from "ethers";
+import { useAccount, useWaitForTransactionReceipt } from "wagmi";
+import { useWriteContract } from "wagmi";
+import { contractAddress, ABI } from "@/web3/PromptHash";
 
 interface FormData {
   image: string;
@@ -22,6 +24,25 @@ interface FormData {
 }
 
 export function CreatePromptForm() {
+  const { address } = useAccount();
+  const [submitted, setSubmitted] = useState(false);
+
+  const {
+    data: hash,
+    isPending: isContractPending,
+    writeContract,
+    error: contractError,
+  } = useWriteContract();
+
+  // Wait for transaction confirmation
+  const {
+    isLoading: isConfirming,
+    isSuccess: isConfirmed,
+    error: confirmError,
+  } = useWaitForTransactionReceipt({
+    hash,
+  });
+
   const [formData, setFormData] = useState<FormData>({
     image: "",
     title: "",
@@ -33,7 +54,8 @@ export function CreatePromptForm() {
 
   const [errors, setErrors] = useState<{ [key: string]: string | null }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [account, setAccount] = useState<string | null>(null);
+  const [isDatabaseSaving, setIsDatabaseSaving] = useState(false);
+  const [transactionStep, setTransactionStep] = useState<'idle' | 'blockchain' | 'database' | 'complete'>('idle');
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -76,73 +98,144 @@ export function CreatePromptForm() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  // Save to database after blockchain confirmation
+  const saveToDatabase = async () => {
+    setIsDatabaseSaving(true);
+    setTransactionStep('database');
 
-    // get the user wallet address
-    if (!window.ethereum) {
-      alert("MetaMask not installed");
-      return;
-    }
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const signer = await provider.getSigner();
-    const network = await provider.getNetwork();
-    console.log("Connected Network:", Number(network.chainId));
-    const address = await signer.getAddress();
-    if (!address || address == null) {
-      alert("connect wallet before proceeding");
-      return;
-    }
-    setAccount(address);
-    // validate form and submit
-    if (validateForm()) {
-      setIsSubmitting(true);
-      try {
-        const response = await fetch("/api/prompts", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            image: formData.image,
-            title: formData.title,
-            content: formData.content,
-            category: formData.category,
-            price: Number(formData.price),
-            rating: Number(formData.rating),
-            walletAddress: account,
-            // Note: owner will be set by the API based on the connected wallet address
-          }),
-        });
+    try {
+      const response = await fetch("/api/prompts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          image: formData.image,
+          title: formData.title,
+          content: formData.content,
+          category: formData.category,
+          price: Number(formData.price),
+          rating: Number(formData.rating),
+          walletAddress: address,
+          transactionHash: hash, // Include the blockchain transaction hash
+        }),
+      });
 
-        const data = await response.json();
-        console.log("API Response:", data);
+      const data = await response.json();
+      console.log("API Response:", data);
 
-        if (!response.ok) {
-          throw new Error(data.error || "Failed to create prompt");
-        }
-
-        // Reset form after successful submission
-        setFormData({
-          image: "",
-          title: "",
-          content: "",
-          category: "",
-          price: "",
-          rating: "1",
-        });
-        alert("Prompt submitted successfully!");
-      } catch (error: any) {
-        console.error("Error submitting prompt:", error);
-        alert(error.message);
-      } finally {
-        setIsSubmitting(false);
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to save to database");
       }
+
+      // Success! Reset form and show message
+      setFormData({
+        image: "",
+        title: "",
+        content: "",
+        category: "",
+        price: "3",
+        rating: "3",
+      });
+
+      setTransactionStep('complete');
+
+    } catch (error: any) {
+      console.error("Database save error:", error);
+      alert(`Blockchain transaction successful, but database save failed: ${error.message}`);
+    } finally {
+      setIsDatabaseSaving(false);
+      setIsSubmitting(false);
+      setSubmitted(false);
     }
   };
 
+  // Monitor blockchain transaction status
+  useEffect(() => {
+    if (isConfirmed && submitted) {
+      // Transaction confirmed on blockchain, now save to database
+      saveToDatabase();
+    }
+  }, [isConfirmed, submitted]);
+
+  // Handle contract or confirmation errors
+  useEffect(() => {
+    if (contractError || confirmError) {
+      console.error("Transaction error:", contractError || confirmError);
+      alert(`Transaction failed: ${(contractError || confirmError)?.message}`);
+      setIsSubmitting(false);
+      setSubmitted(false);
+      setTransactionStep('idle');
+    }
+  }, [contractError, confirmError]);
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!address) {
+      alert("Please connect your wallet before proceeding");
+      return;
+    }
+
+    if (!validateForm()) return;
+
+    setIsSubmitting(true);
+    setTransactionStep('blockchain');
+
+    try {
+      // First, initiate blockchain transaction
+      writeContract({
+        address: contractAddress,
+        abi: ABI,
+        functionName: "createPrompt",
+        args: [formData.image, formData.title],
+      });
+
+      setSubmitted(true);
+    } catch (error: any) {
+      console.error("Error initiating blockchain transaction:", error);
+      alert(`Failed to initiate transaction: ${error.message}`);
+      setIsSubmitting(false);
+      setTransactionStep('idle');
+    }
+  };
+
+  // Get current status message
+  const getStatusMessage = () => {
+    switch (transactionStep) {
+      case 'blockchain':
+        return isContractPending
+          ? "Waiting for approval..."
+          : isConfirming
+            ? "Confirming transaction..."
+            : "Processing...";
+      case 'database':
+        return "Saving prompt...";
+      case 'complete':
+        return "Prompt created successfully!";
+      default:
+        return isSubmitting ? "Processing..." : "Create Prompt";
+    }
+  };
+
+  const isProcessing = isSubmitting || isContractPending || isConfirming || isDatabaseSaving;
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Transaction Status */}
+      {transactionStep !== 'idle' && (
+        <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+          <p className="text-sm text-blue-800">
+            Status: {getStatusMessage()}
+          </p>
+          {hash && (
+            <p className="text-xs text-blue-600 mt-1">
+              Transaction Hash: {hash}
+            </p>
+          )}
+        </div>
+      )}
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
           <label className="text-sm font-medium">Image URL</label>
@@ -152,6 +245,7 @@ export function CreatePromptForm() {
             value={formData.image}
             onChange={handleChange}
             className={errors.image ? "border-red-500" : "border-purple-400"}
+            disabled={isProcessing}
           />
           {errors.image && (
             <p className="text-sm text-red-500 flex items-center gap-1">
@@ -169,6 +263,7 @@ export function CreatePromptForm() {
             value={formData.title}
             onChange={handleChange}
             className={errors.title ? "border-red-500" : "border-purple-400"}
+            disabled={isProcessing}
           />
           {errors.title && (
             <p className="text-sm text-red-500 flex items-center gap-1">
@@ -188,6 +283,7 @@ export function CreatePromptForm() {
           onChange={handleChange}
           className={errors.content ? "border-red-500" : "border-purple-400"}
           rows={4}
+          disabled={isProcessing}
         />
         {errors.content && (
           <p className="text-sm text-red-500 flex items-center gap-1">
@@ -203,6 +299,7 @@ export function CreatePromptForm() {
           <Select
             value={formData.category}
             onValueChange={handleCategoryChange}
+            disabled={isProcessing}
           >
             <SelectTrigger
               className={
@@ -229,7 +326,7 @@ export function CreatePromptForm() {
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-medium">Price (HBAR)</label>
+          <label className="text-sm font-medium">Price (AVAX)</label>
           <div className="relative">
             <DollarSign className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
@@ -241,9 +338,9 @@ export function CreatePromptForm() {
               step="1"
               min={1}
               max={1000}
-              className={`pl-9 ${
-                errors.price ? "border-red-500" : "border-purple-400"
-              }`}
+              className={`pl-9 ${errors.price ? "border-red-500" : "border-purple-400"
+                }`}
+              disabled={isProcessing}
             />
           </div>
           {errors.price && (
@@ -266,6 +363,7 @@ export function CreatePromptForm() {
           min="1"
           max="5"
           className={errors.rating ? "border-red-500" : "border-purple-400"}
+          disabled={isProcessing}
         />
         {errors.rating && (
           <p className="text-sm text-red-500 flex items-center gap-1">
@@ -275,8 +373,8 @@ export function CreatePromptForm() {
         )}
       </div>
 
-      <Button type="submit" className="w-full" disabled={isSubmitting}>
-        {isSubmitting ? "Submitting..." : "Submit Prompt"}
+      <Button type="submit" className="w-full" disabled={isProcessing}>
+        {getStatusMessage()}
       </Button>
     </form>
   );

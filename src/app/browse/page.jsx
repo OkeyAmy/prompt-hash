@@ -97,7 +97,7 @@ export default function BrowsePage() {
                 </Select>
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-medium">Price Range (HBAR)</label>
+                <label className="text-sm font-medium">Price Range (AVAX)</label>
                 <Slider
                   value={priceRange}
                   onValueChange={setPriceRange}
@@ -105,8 +105,8 @@ export default function BrowsePage() {
                   step={0.01}
                 />
                 <div className="flex justify-between text-sm text-muted-foreground">
-                  <span>{priceRange[0]} HBAR</span>
-                  <span>{priceRange[1]} HBAR</span>
+                  <span>{priceRange[0]} AVAX</span>
+                  <span>{priceRange[1]} AVAX</span>
                 </div>
               </div>
               <div className="space-y-2">
@@ -189,7 +189,7 @@ export default function BrowsePage() {
                     </CardContent>
                     <CardFooter className="p-4 pt-0 flex justify-between items-center">
                       <span className="text-lg font-bold">
-                        {prompt.price} HBAR
+                        {prompt.price} AVAX
                       </span>
                       <Button onClick={() => openModal(prompt)}>
                         <Eye className="mr-2 h-4 w-4" />
@@ -266,7 +266,7 @@ export default function BrowsePage() {
 
                 <div className="flex justify-between items-center">
                   <span className="text-2xl font-bold">
-                    {selectedPrompt.price} HBAR
+                    {selectedPrompt.price} AVAX
                   </span>
                   <Button size="lg">
                     <ShoppingCart className="mr-2 h-4 w-4" />

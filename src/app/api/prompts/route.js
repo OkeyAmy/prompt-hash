@@ -27,17 +27,16 @@ export async function POST(request) {
       );
     }
 
-    // Find the user by wallet address
-    const user = await User.findOne({ 
-      walletAddress: walletAddress.toLowerCase() 
-    });
-
+    // Find the user or create new user if he doesn't exist
+    const user = await createUserIfNotExists(walletAddress);
     if (!user) {
       return NextResponse.json(
         { error: "User not found. Please connect your wallet first." },
         { status: 404 }
       );
     }
+    // Get the next prompt token ID
+    const nextPromptTokenId = await getNextPromptTokenId();
 
     const newPrompt = new Prompt({
       image,
@@ -47,6 +46,7 @@ export async function POST(request) {
       price,
       category: category || "Other",
       rating: 3,
+      promptTokenId: nextPromptTokenId, // Auto-generated ID
     });
 
     await newPrompt.save();
@@ -55,9 +55,9 @@ export async function POST(request) {
     const populatedPrompt = await newPrompt.populate('owner', 'username walletAddress');
 
     return NextResponse.json(
-      { 
-        message: "Prompt created successfully", 
-        prompt: populatedPrompt 
+      {
+        message: "Prompt created successfully",
+        prompt: populatedPrompt
       },
       { status: 201 }
     );
@@ -85,8 +85,8 @@ export async function GET(request) {
     }
 
     if (walletAddress) {
-      const user = await User.findOne({ 
-        walletAddress: walletAddress.toLowerCase() 
+      const user = await User.findOne({
+        walletAddress: walletAddress.toLowerCase()
       });
       if (user) {
         query.owner = user._id;
@@ -104,5 +104,53 @@ export async function GET(request) {
       { error: error.message || "Failed to fetch prompts" },
       { status: 500 }
     );
+  }
+}
+
+async function createUserIfNotExists(walletAddress, username = null) {
+  const existingUser = await User.findOne({
+    walletAddress: walletAddress.toLowerCase(),
+  });
+
+  if (existingUser) {
+    return existingUser;
+  }
+
+  // Generate random username if not provided
+  const generatedUsername = `user${Math.floor(100000 + Math.random() * 900000)}`;
+
+  // Create new user
+  const newUser = new User({
+    walletAddress: walletAddress.toLowerCase(),
+    username: generatedUsername,
+    rating: 4,
+  });
+
+  await newUser.save();
+  console.log('New user created successfully')
+  return newUser;
+}
+
+// Function to get the next prompt token ID
+async function getNextPromptTokenId() {
+  try {
+    // Find the prompt with the highest promptTokenId
+    const lastPrompt = await Prompt.findOne({})
+      .sort({ promptTokenId: -1 })
+      .select('promptTokenId')
+      .lean();
+
+    // If no prompts exist, start with ID 1
+    if (!lastPrompt || !lastPrompt.promptTokenId) {
+      return 1;
+    }
+
+    // Return the next ID
+    return lastPrompt.promptTokenId + 1;
+  } catch (error) {
+    console.error("Error getting next prompt token ID:", error);
+    // Fallback: try to count documents and add 1
+    const count = await Prompt.countDocuments({});
+    return count + 1;
   }
 }

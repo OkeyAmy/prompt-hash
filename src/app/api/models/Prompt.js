@@ -36,6 +36,16 @@ const promptSchema = new mongoose.Schema(
       required: true,
       min: 0,
     },
+    transactionHash: {
+      type: String,
+      required: false
+    },
+    promptTokenId: { //the blockchain tokenid for each prompt, it will be used for handling the transfers on chain
+      type: Number,
+      required: true,
+      unique: true,
+      index: true   // For faster queries
+    },
     category: {
       type: String,
       required: true,

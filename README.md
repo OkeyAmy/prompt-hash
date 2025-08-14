@@ -46,7 +46,7 @@ Our vision is to become the go-to resource where creators and users converge—l
 - **AI Integration**: Secret Network AI API
 - **Authentication**: Wallet Connect for blockchain integration
 - **Server**: Uvicorn as the ASGI server
-- **Blockchain**: Secret Network for privacy-preserving operations
+- **Blockchain**: Avalanche Blockchain for privacy-preserving operations
 - **Icons & UI**: Lucide for icon components
 
 

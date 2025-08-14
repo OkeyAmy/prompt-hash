@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import DisplayWallet from "./DisplayWallet";
+import { CustomConnectButton } from "./CustomConnectButton";
 
 export function Navigation() {
   return (
@@ -133,7 +133,7 @@ export function Navigation() {
             </div>
           </div>
           {/* display wallet here */}
-          <DisplayWallet />
+          <CustomConnectButton />
         </div>
       </div>
     </header>

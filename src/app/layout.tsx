@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Provider } from "Provider";
 
 export const metadata: Metadata = {
   title: "Prompt Hash",
@@ -29,7 +30,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Provider>
       <body>{children}</body>
+      </Provider>
     </html>
   );
 }

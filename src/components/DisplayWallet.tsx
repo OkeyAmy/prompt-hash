@@ -88,14 +88,14 @@ const DisplayWallet = () => {
         params: [
           {
             chainId: "0x128",
-            chainName: "Hedera Testnet (Hashio)",
+            chainName: "Avalanche C-Chain Testnet",
             nativeCurrency: {
-              name: "HBAR",
-              symbol: "HBAR",
+              name: "AVAX",
+              symbol: "AVAX",
               decimals: 18,
             },
-            rpcUrls: ["https://testnet.hashio.io/api"],
-            blockExplorerUrls: ["https://hashscan.io/testnet"],
+            rpcUrls: ["https://api.avax-test.network/ext/bc/C/rpc"],
+            blockExplorerUrls: ["https://subnets-test.avax.network/c-chain"],
           },
         ],
       });
@@ -159,7 +159,7 @@ const DisplayWallet = () => {
 
   const viewInExplorer = () => {
     if (account) {
-      window.open(`https://hashscan.io/testnet/account/${account}`, "_blank");
+      window.open(`https://etherscan.io/testnet/account/${account}`, "_blank");
     }
   };
   return (

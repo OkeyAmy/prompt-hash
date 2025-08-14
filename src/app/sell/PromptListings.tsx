@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -114,7 +115,7 @@ export function PromptListings() {
                   </div>
                   <div>
                     <span className="text-muted-foreground">Price:</span>
-                    {prompt.price} HBAR
+                    {prompt.price} AVAX
                   </div>
                   <div>
                     <span className="text-muted-foreground">Created:</span>
@@ -126,9 +127,12 @@ export function PromptListings() {
                 <Button variant="outline" size="sm">
                   Edit
                 </Button>
-                <Button variant="destructive" size="sm">
-                  Remove
+                <Button variant="secondary" size="sm">
+                  Sell
                 </Button>
+                 {/* <Button variant="destructive" size="sm">
+                  Remove
+                </Button> */}
               </div>
             </div>
           </CardContent>
