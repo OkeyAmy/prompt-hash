@@ -194,7 +194,7 @@ export function AiChatButton() {
       {isOpen && (
         <div
           ref={chatRef}
-          className="fixed bottom-[calc(5rem+1.2rem)] right-6 bg-white dark:bg-gray-900 p-6 rounded-xl border border-border w-[520px] h-[550px] shadow-xl z-50 flex flex-col bg-gradient-to-r from-purple-400/20 to-blue-400/20 backdrop-blur-sm text-black hidden md:flex"
+          className="fixed bottom-[calc(5rem+1.2rem)] right-2 md:right-6 bg-white dark:bg-gray-900 p-3 md:p-6 rounded-xl border border-border w-[calc(100vw-1rem)] max-w-[520px] md:w-[520px] h-[calc(100vh-8rem)] max-h-[550px] md:h-[550px] shadow-xl z-50 flex flex-col bg-gradient-to-r from-purple-400/20 to-blue-400/20 backdrop-blur-sm text-black"
         >
           {/* Header */}
           <div className="flex flex-col space-y-2 pb-4 border-b border-gray-200 dark:border-gray-700">
