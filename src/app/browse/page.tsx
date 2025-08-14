@@ -24,20 +24,81 @@ import {
   Loader2,
 } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useAccount, useWaitForTransactionReceipt } from "wagmi";
+import { useWriteContract } from "wagmi";
+import { contractAddress, ABI } from "@/web3/PromptHash";
+import { ethers } from "ethers";
+
+interface Prompt {
+  _id: string;
+  title: string;
+  content: string;
+  price: number;
+  category: string;
+  image: string;
+  rating: number;
+  owner: {
+    username: string;
+    walletAddress: string;
+  };
+  promptTokenId: number;
+  createdAt: string;
+}
 
 export default function BrowsePage() {
-  const [prompts, setPrompts] = useState([]);
+  const [prompts, setPrompts] = useState<Prompt[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const [priceRange, setPriceRange] = useState([0, 1]);
-  const [selectedPrompt, setSelectedPrompt] = useState(null);
+  const [selectedPrompt, setSelectedPrompt] = useState<Prompt | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [buyingPromptId, setBuyingPromptId] = useState<number | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const { address } = useAccount();
+  const {
+    data: hash,
+    isPending: isContractPending,
+    writeContract,
+    error: contractError,
+  } = useWriteContract();
+
+  // Wait for transaction confirmation
+  const {
+    isLoading: isConfirming,
+    isSuccess: isConfirmed,
+    error: confirmError,
+  } = useWaitForTransactionReceipt({
+    hash,
+  });
 
   useEffect(() => {
     fetchPrompts();
   }, []);
+
+  // Handle successful transaction
+  useEffect(() => {
+    if (isConfirmed && buyingPromptId) {
+      alert(`Prompt ${buyingPromptId} purchased successfully!`);
+      setBuyingPromptId(null);
+      setIsSubmitting(false);
+      closeModal();
+      // Optionally refresh the prompts list
+      fetchPrompts();
+    }
+  }, [isConfirmed, buyingPromptId]);
+
+  // Handle transaction errors
+  useEffect(() => {
+    if (contractError || confirmError) {
+      console.error("Transaction error:", contractError || confirmError);
+      alert(`Transaction failed: ${(contractError || confirmError)?.message}`);
+      setIsSubmitting(false);
+      setBuyingPromptId(null);
+    }
+  }, [contractError, confirmError]);
 
   const fetchPrompts = async () => {
     try {
@@ -50,7 +111,7 @@ export default function BrowsePage() {
       }
 
       setPrompts(data);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error fetching prompts:", error);
       setError(error.message);
     } finally {
@@ -58,14 +119,96 @@ export default function BrowsePage() {
     }
   };
 
-  const openModal = (prompt) => {
+  const buyPrompt = async (prompt: Prompt) => {
+    if (!address) {
+      alert("Please connect your wallet before proceeding");
+      return;
+    }
+
+    if (!prompt.promptTokenId) {
+      alert("Invalid prompt token ID");
+      return;
+    }
+
+    // Check if user is trying to buy their own prompt
+    if (prompt.owner.walletAddress.toLowerCase() === address.toLowerCase()) {
+      alert("You cannot buy your own prompt");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setBuyingPromptId(prompt.promptTokenId);
+
+    try {
+      // Convert price to wei (the value to send with the transaction)
+      const priceInWei = ethers.parseEther((prompt.price*1.2).toString());
+
+      // Buy the prompt - this is a payable function
+      writeContract({
+        address: contractAddress,
+        abi: ABI,
+        functionName: "buyPrompt",
+        args: [prompt.promptTokenId],
+        value: priceInWei, // Send the exact price as value
+      });
+
+    } catch (error: any) {
+      console.error("Error buying prompt:", error);
+      alert(`Failed to initiate transaction: ${error.message}`);
+      setIsSubmitting(false);
+      setBuyingPromptId(null);
+    }
+  };
+
+  const openModal = (prompt: Prompt) => {
     setSelectedPrompt(prompt);
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setSelectedPrompt(null);
   };
+
+  const getBuyButtonText = (promptTokenId: number) => {
+    if (buyingPromptId === promptTokenId) {
+      if (isContractPending) return "Confirming...";
+      if (isConfirming) return "Processing...";
+    }
+    return "Buy Now";
+  };
+
+  const isBuyButtonDisabled = (prompt: Prompt) => {
+    return (
+      (isSubmitting && buyingPromptId === prompt.promptTokenId) ||
+      (address && prompt.owner.walletAddress.toLowerCase() === address.toLowerCase())
+    );
+  };
+
+  const getBuyButtonVariant = (prompt: Prompt) => {
+    if (address && prompt.owner.walletAddress.toLowerCase() === address.toLowerCase()) {
+      return "outline";
+    }
+    return "default";
+  };
+
+  const getBuyButtonLabel = (prompt: Prompt) => {
+    if (!address) return "Connect Wallet";
+    if (address && prompt.owner.walletAddress.toLowerCase() === address.toLowerCase()) {
+      return "Your Prompt";
+    }
+    return getBuyButtonText(prompt.promptTokenId);
+  };
+
+  // Filter prompts based on search and category
+  const filteredPrompts = prompts.filter((prompt) => {
+    const matchesSearch = prompt.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      prompt.content.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = !selectedCategory || prompt.category === selectedCategory;
+    const matchesPrice = prompt.price >= priceRange[0] && prompt.price <= priceRange[1];
+
+    return matchesSearch && matchesCategory && matchesPrice;
+  });
 
   return (
     <div className="min-h-screen bg-gray-950 bg-gradient-to-r from-purple-400 to-blue-500 flex flex-col">
@@ -86,13 +229,16 @@ export default function BrowsePage() {
                   onValueChange={setSelectedCategory}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select category" />
+                    <SelectValue placeholder="All Categories" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="creative">Creative Writing</SelectItem>
-                    <SelectItem value="coding">Coding</SelectItem>
-                    <SelectItem value="marketing">Marketing</SelectItem>
-                    <SelectItem value="business">Business</SelectItem>
+                    <SelectItem value="all">All Categories</SelectItem>
+                    <SelectItem value="Creative Writing">Creative Writing</SelectItem>
+                    <SelectItem value="Programming">Programming</SelectItem>
+                    <SelectItem value="Marketing">Marketing</SelectItem>
+                    <SelectItem value="Music">Music</SelectItem>
+                    <SelectItem value="Gaming">Gaming</SelectItem>
+                    <SelectItem value="Other">Other</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -101,8 +247,8 @@ export default function BrowsePage() {
                 <Slider
                   value={priceRange}
                   onValueChange={setPriceRange}
-                  max={1}
-                  step={0.01}
+                  max={100}
+                  step={1}
                 />
                 <div className="flex justify-between text-sm text-muted-foreground">
                   <span>{priceRange[0]} AVAX</span>
@@ -151,13 +297,13 @@ export default function BrowsePage() {
               </div>
             ) : error ? (
               <div className="text-center text-red-500 p-4">{error}</div>
-            ) : prompts.length === 0 ? (
+            ) : filteredPrompts.length === 0 ? (
               <div className="text-center text-gray-500 p-4">
-                No prompts found.
+                No prompts found matching your criteria.
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {prompts.map((prompt) => (
+                {filteredPrompts.map((prompt) => (
                   <Card
                     key={prompt._id}
                     className="group relative overflow-hidden transition-all hover:shadow-lg"
@@ -171,6 +317,11 @@ export default function BrowsePage() {
                       <Badge className="absolute top-2 right-2">
                         {prompt.category}
                       </Badge>
+                      {address && prompt.owner.walletAddress.toLowerCase() === address.toLowerCase() && (
+                        <Badge className="absolute top-2 left-2 bg-green-500">
+                          Your Prompt
+                        </Badge>
+                      )}
                     </div>
                     <CardContent className="p-4">
                       <h3 className="font-semibold">{prompt.title}</h3>
@@ -264,13 +415,36 @@ export default function BrowsePage() {
                   </div>
                 </div>
 
+                {/* Transaction Status */}
+                {buyingPromptId === selectedPrompt.promptTokenId && (
+                  <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                    <p className="text-sm text-blue-800">
+                      {isContractPending && "Waiting for wallet confirmation..."}
+                      {isConfirming && "Processing purchase on blockchain..."}
+                    </p>
+                    {hash && (
+                      <p className="text-xs text-blue-600 mt-1">
+                        Transaction Hash: {hash}
+                      </p>
+                    )}
+                  </div>
+                )}
+
                 <div className="flex justify-between items-center">
                   <span className="text-2xl font-bold">
                     {selectedPrompt.price} AVAX
                   </span>
-                  <Button size="lg">
+                  <Button
+                    size="lg"
+                    onClick={() => buyPrompt(selectedPrompt)}
+                    disabled={isBuyButtonDisabled(selectedPrompt)}
+                    variant={getBuyButtonVariant(selectedPrompt)}
+                  >
+                    {isBuyButtonDisabled(selectedPrompt) && isSubmitting && (
+                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                    )}
                     <ShoppingCart className="mr-2 h-4 w-4" />
-                    Buy Now
+                    {getBuyButtonLabel(selectedPrompt)}
                   </Button>
                 </div>
               </div>

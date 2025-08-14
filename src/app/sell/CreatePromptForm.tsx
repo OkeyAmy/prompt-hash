@@ -134,7 +134,7 @@ export function CreatePromptForm() {
         title: "",
         content: "",
         category: "",
-        price: "3",
+        price: "0.001",
         rating: "3",
       });
 
@@ -226,7 +226,7 @@ export function CreatePromptForm() {
       {transactionStep !== 'idle' && (
         <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
           <p className="text-sm text-blue-800">
-            Status: {getStatusMessage()}
+            {getStatusMessage()}
           </p>
           {hash && (
             <p className="text-xs text-blue-600 mt-1">
@@ -336,7 +336,7 @@ export function CreatePromptForm() {
               value={formData.price}
               onChange={handleChange}
               step="1"
-              min={1}
+              min={0.0001}
               max={1000}
               className={`pl-9 ${errors.price ? "border-red-500" : "border-purple-400"
                 }`}
