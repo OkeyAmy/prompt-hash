@@ -4,12 +4,16 @@
 const API_BASE_URL = "https://secret-ai-gateway.onrender.com";
 
 // Available models
-export type AIModel = "deepseek-r1:70b" | "llama3.2-vision";
+export type AIModel = "deepseek-r1:70b" | "llama3.2-vision" | "gemini-2.5-flash";
 
 // Function to get available models
 export async function getModels() {
 	try {
-		const response = await fetch(`${API_BASE_URL}/api/models`);
+		const response = await fetch(`${API_BASE_URL}/api/models`, {
+			headers: {
+				"X-API-Key": "bWFzdGVyQHNjcnRsYWJzLmNvbTpTZWNyZXROZXR3b3JrTWFzdGVyS2V5X18yMDI1"
+			}
+		});
 		if (!response.ok) {
 			throw new Error(`Failed to fetch models: ${response.status}`);
 		}
@@ -23,7 +27,11 @@ export async function getModels() {
 // Function to check API health
 export async function checkHealth() {
 	try {
-		const response = await fetch(`${API_BASE_URL}/api/health`);
+		const response = await fetch(`${API_BASE_URL}/api/health`, {
+			headers: {
+				"X-API-Key": "bWFzdGVyQHNjcnRsYWJzLmNvbTpTZWNyZXROZXR3b3JrTWFzdGVyS2V5X18yMDI1"
+			}
+		});
 		return response.ok;
 	} catch (error) {
 		console.error("Health check failed:", error);
@@ -37,6 +45,7 @@ export async function getChatResponse(
 	model: AIModel = "deepseek-r1:70b"
 ) {
 	try {
+		// Use the same format as your working test
 		const response = await fetch(
 			`${API_BASE_URL}/api/chat?prompt=${encodeURIComponent(
 				prompt
@@ -45,11 +54,14 @@ export async function getChatResponse(
 				method: "GET",
 				headers: {
 					Accept: "application/json",
+					// Remove the X-API-Key header since your direct test works without it
 				},
 			}
 		);
 
 		if (!response.ok) {
+			const errorText = await response.text();
+			console.error(`Chat API error: ${response.status}`, errorText);
 			throw new Error(`Chat API error: ${response.status}`);
 		}
 

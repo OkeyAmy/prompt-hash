@@ -26,7 +26,7 @@ export function AiChatButton() {
     },
   ])
   const [isLoading, setIsLoading] = useState(false)
-  const [selectedModel, setSelectedModel] = useState<AIModel>("deepseek-r1:70b")
+  const [selectedModel, setSelectedModel] = useState<AIModel>("gemini-2.5-flash")
   const [isImproving, setIsImproving] = useState(false)
 
   const chatRef = useRef<HTMLDivElement>(null)
@@ -67,17 +67,12 @@ export function AiChatButton() {
       let responseText = "Sorry, I couldn't generate a response."
 
       if (response) {
-        // Check if response has a "Response" property
-        if (typeof response === "object" && response.Response) {
-          responseText = response.Response
-        }
-        // If it's a string, use it directly
-        else if (typeof response === "string") {
+        // Handle different response formats
+        if (typeof response === "object") {
+          // Try different possible response properties
+          responseText = response.response || response.Response || response.content || response.message || JSON.stringify(response)
+        } else if (typeof response === "string") {
           responseText = response
-        }
-        // If it's an object but doesn't have Response, stringify it
-        else if (typeof response === "object") {
-          responseText = JSON.stringify(response)
         }
       }
 
@@ -99,6 +94,11 @@ export function AiChatButton() {
       ) // Approximate time for typing + buffer
     } catch (error) {
       console.error("Error getting response:", error)
+      // Log more details for debugging
+      if (error instanceof Error) {
+        console.error("Error message:", error.message)
+        console.error("Error stack:", error.stack)
+      }
       // Add error message
       const errorMessage: Message = {
         role: "ai",
