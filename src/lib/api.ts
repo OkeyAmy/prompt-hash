@@ -51,6 +51,8 @@ export async function getChatResponse(
 			headers: {
 				Accept: "application/json",
 			},
+			cache: "no-store",
+			credentials: "omit",
 		});
 
 		if (!response.ok) {
@@ -67,8 +69,29 @@ export async function getChatResponse(
 	}
 }
 
-// Improve prompt (JSON body)
+// Improve prompt (try GET first, then fallback to POST)
 export async function improvePrompt(prompt: string, target: "text" | "image" = "text") {
+	// Try GET route
+	try {
+		const q = new URLSearchParams({ prompt, target });
+		const res = await fetch(`${API_BASE_URL}/api/improve-prompt?${q.toString()}`, {
+			method: "GET",
+			headers: { Accept: "application/json" },
+			cache: "no-store",
+			credentials: "omit",
+		});
+		if (res.ok) {
+			const result = await res.json();
+			if (typeof result === "string") return result;
+			if (result?.response) return result.response;
+			if (result?.prompt) return result.prompt;
+			if (result?.improved) return result.improved;
+		}
+	} catch (e) {
+		console.warn("GET improve-prompt failed, trying POST...");
+	}
+
+	// Fallback to POST
 	try {
 		const response = await fetch(`${API_BASE_URL}/api/improve-prompt`, {
 			method: "POST",
@@ -77,17 +100,17 @@ export async function improvePrompt(prompt: string, target: "text" | "image" = "
 				Accept: "application/json",
 			},
 			body: JSON.stringify({ prompt, target }),
+			cache: "no-store",
+			credentials: "omit",
 		});
 
 		if (!response.ok) {
 			const errorText = await response.text();
 			console.error(`Improve prompt API error: ${response.status}`, errorText);
-			// Return original prompt if fail
 			return prompt;
 		}
 
 		const result = await response.json();
-		// Try common fields
 		if (typeof result === "string") return result;
 		if (result?.response) return result.response;
 		if (result?.prompt) return result.prompt;
