@@ -214,7 +214,7 @@ export default function BrowsePage() {
     <div className="min-h-screen flex flex-col bg-gray-950">
       <Navigation />
       <main className="flex-1 container py-10">
-                  <div className="flex flex-col md:flex-row gap-10">
+        <div className="flex flex-col md:flex-row gap-10">
           {/* Filters Sidebar */}
           <aside className="w-full md:w-72 space-y-6">
             <div className="space-y-4">
