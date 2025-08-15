@@ -2,7 +2,7 @@ import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { AlertCircle, DollarSign } from "lucide-react";
+import { AlertCircle, DollarSign, Wand2, Loader2 } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -13,6 +13,7 @@ import {
 import { useAccount, useWaitForTransactionReceipt } from "wagmi";
 import { useWriteContract } from "wagmi";
 import { contractAddress, ABI } from "@/web3/PromptHash";
+import { improvePromptText } from "@/lib/api";
 
 interface FormData {
   image: string;
@@ -55,7 +56,37 @@ export function CreatePromptForm() {
   const [errors, setErrors] = useState<{ [key: string]: string | null }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDatabaseSaving, setIsDatabaseSaving] = useState(false);
+  const [isImproving, setIsImproving] = useState(false);
   const [transactionStep, setTransactionStep] = useState<'idle' | 'blockchain' | 'database' | 'complete'>('idle');
+
+  // Function to improve the prompt content
+  const handleImprovePrompt = async () => {
+    if (!formData.content.trim()) {
+      alert("Please enter some content first before improving it.");
+      return;
+    }
+
+    setIsImproving(true);
+
+    try {
+      const improvedContent = await improvePromptText(formData.content, 'text');
+      
+      if (improvedContent && improvedContent !== formData.content) {
+        setFormData(prev => ({ ...prev, content: improvedContent }));
+        // Clear any existing content errors since we now have improved content
+        if (errors.content) {
+          setErrors(prev => ({ ...prev, content: null }));
+        }
+      } else {
+        alert("Unable to improve the prompt. Please try again or modify it manually.");
+      }
+    } catch (error) {
+      console.error("Error improving prompt:", error);
+      alert("Failed to improve prompt. Please try again.");
+    } finally {
+      setIsImproving(false);
+    }
+  };
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -275,7 +306,24 @@ export function CreatePromptForm() {
       </div>
 
       <div className="space-y-2">
-        <label className="text-sm font-medium">Content</label>
+        <div className="flex items-center justify-between">
+          <label className="text-sm font-medium">Content</label>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={handleImprovePrompt}
+            disabled={isProcessing || isImproving || !formData.content.trim()}
+            className="flex items-center gap-2 text-purple-600 border-purple-300 hover:bg-purple-50"
+          >
+            {isImproving ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Wand2 className="h-4 w-4" />
+            )}
+            {isImproving ? "Improving..." : "Improve Prompt"}
+          </Button>
+        </div>
         <Textarea
           placeholder="Enter prompt content..."
           name="content"
@@ -291,6 +339,9 @@ export function CreatePromptForm() {
             {errors.content}
           </p>
         )}
+        <p className="text-xs text-gray-500">
+          Use the \"Improve Prompt\" button to enhance your content with AI suggestions.
+        </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

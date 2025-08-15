@@ -93,7 +93,39 @@ export function localImprovePrompt(prompt: string): string {
 	return improved;
 }
 
-// Function to improve a prompt
+// Function to improve a prompt using the new GET endpoint
+export async function improvePromptText(prompt: string, target: 'text' | 'image' = 'text') {
+	try {
+		const response = await fetch(
+			`${API_BASE_URL}/api/improve-prompt?prompt=${encodeURIComponent(prompt)}&target=${target}`,
+			{
+				method: "GET",
+				headers: {
+					Accept: "application/json",
+				},
+			}
+		);
+
+		if (!response.ok) {
+			const errorText = await response.text();
+			console.error(`Improve prompt API error: ${response.status}`, errorText);
+			return localImprovePrompt(prompt);
+		}
+
+		const result = await response.json();
+		
+		// Handle the response format: { "response": "<improved prompt>" }
+		if (result && result.response) {
+			return result.response;
+		}
+		
+		// Fallback to local improvement if response format is unexpected
+		return localImprovePrompt(prompt);
+	} catch (error) {
+		console.error("Error improving prompt:", error);
+		return localImprovePrompt(prompt);
+	}
+}
 export async function improvePrompt(prompt: string) {
 	try {
 		// The API expects a string as the body, not a JSON object
