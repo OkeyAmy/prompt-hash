@@ -15,14 +15,14 @@ export function Hero() {
       <div className="absolute inset-0" />
       <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-500">
+          <h1 className="text-5xl sm:text-6xl font-extrabold tracking-tight leading-tight bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-500">
             AI Prompt Marketplace
           </h1>
-          <p className="mt-6 text-lg leading-8 text-gray-300">
+          <p className="mt-6 text-lg leading-8 text-gray-300 max-w-2xl mx-auto">
             Explore the best prompts from top creators. Generate images, text &
             code with ease.
           </p>
-          <div className="mt-10 flex items-center justify-center gap-x-6">
+          <div className="mt-10 flex items-center justify-center gap-x-4">
             <Link href="/browse">
               <Button
                 size="lg"

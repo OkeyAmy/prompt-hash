@@ -15,8 +15,8 @@ import { CustomConnectButton } from "./CustomConnectButton";
 
 export function Navigation() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-gray-800 bg-gray-950/95 backdrop-blur supports-[backdrop-filter]:bg-gray-950/60">
-      <div className="container flex h-16 items-center">
+    <header className="sticky top-0 z-50 w-full border-b border-gray-800 bg-gray-950/80 backdrop-blur supports-[backdrop-filter]:bg-gray-950/60">
+      <div className="container flex h-16 items-center gap-4">
         <div className="mr-4 hidden md:flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
             <Image
@@ -26,7 +26,7 @@ export function Navigation() {
               height={32}
               className="object-contain"
             />
-            <span className="hidden font-bold sm:inline-block text-purple-400">
+            <span className="hidden font-bold sm:inline-block text-purple-400 text-lg tracking-tight">
               PromptHash
             </span>
           </Link>
@@ -124,11 +124,11 @@ export function Navigation() {
         {/* Search and Wallet Section */}
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
           <div className="w-full flex-1 md:w-auto md:flex-none">
-            <div className="relative">
-              <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-100" />
+            <div className="relative max-w-md">
+              <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-400" />
               <Input
                 placeholder="Search prompts..."
-                className="pl-8 md:w-[200px] lg:w-[300px] bg-gray-400 border-purple-700"
+                className="pl-8 w-full bg-gray-900/60 border-gray-800 text-white placeholder:text-gray-500"
               />
             </div>
           </div>

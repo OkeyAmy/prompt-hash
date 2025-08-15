@@ -184,38 +184,38 @@ export function AiChatButton() {
       {/* Chat Button */}
       <Button
         onClick={toggleChat}
-        className="fixed animate-bounce bottom-6 right-6 rounded-full w-20 h-20 p-0 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 shadow-lg z-50 transition-transform hover:scale-110 hidden md:flex"
+        className="fixed bottom-6 right-6 rounded-full w-14 h-14 p-0 bg-primary hover:bg-primary/90 shadow-lg z-50 transition-transform hover:scale-105 hidden md:flex"
         aria-label="Open chat"
       >
-        <Bot size={40} className="text-white" />
+        <Bot size={28} className="text-white" />
       </Button>
 
       {/* Chat Modal */}
       {isOpen && (
         <div
           ref={chatRef}
-          className="fixed bottom-[calc(5rem+1.2rem)] right-2 md:right-6 bg-white dark:bg-gray-900 p-3 md:p-6 rounded-xl border border-border w-[calc(100vw-1rem)] max-w-[520px] md:w-[520px] h-[calc(100vh-8rem)] max-h-[550px] md:h-[550px] shadow-xl z-50 flex flex-col bg-gradient-to-r from-purple-400/20 to-blue-400/20 backdrop-blur-sm text-black"
+          className="fixed bottom-[calc(5rem+1.2rem)] right-2 md:right-6 p-3 md:p-6 rounded-xl border border-gray-800 w-[calc(100vw-1rem)] max-w-[520px] md:w-[520px] h-[calc(100vh-8rem)] max-h-[550px] md:h-[550px] shadow-2xl z-50 flex flex-col bg-gray-950/95 backdrop-blur text-white"
         >
           {/* Header */}
-          <div className="flex flex-col space-y-2 pb-4 border-b border-gray-200 dark:border-gray-700">
+                      <div className="flex flex-col space-y-2 pb-4 border-b border-gray-800">
             <div className="flex justify-between items-center">
-              <div className="flex items-center gap-2">
-                <Bot size={24} className="text-blue-600 dark:text-blue-400" />
-                <h2 className="font-bold text-xl tracking-tight bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-                  Prompt Hub AI
-                </h2>
-              </div>
+                              <div className="flex items-center gap-2">
+                  <Bot size={24} className="text-purple-400" />
+                  <h2 className="font-bold text-xl tracking-tight text-white">
+                    Prompt Hub AI
+                  </h2>
+                </div>
               <select
                 title="Select AI model"
                 value={selectedModel}
                 onChange={(e) => setSelectedModel(e.target.value as AIModel)}
-                className="text-sm border rounded-md py-1 px-2 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="text-sm border rounded-md py-1 px-2 bg-gray-900/60 border-gray-800 focus:ring-2 focus:ring-purple-600 focus:border-purple-600 text-white"
               >
                 <option value="deepseek-r1:70b">deepseek-r1:70b</option>
                 <option value="llama3.2-vision">llama3.2-vision</option>
               </select>
             </div>
-            <p className="text-sm text-gray-600 dark:text-gray-300">
+            <p className="text-sm text-gray-400">
               Ask me anything about prompts and the marketplace
             </p>
           </div>
@@ -225,26 +225,26 @@ export function AiChatButton() {
             {messages.map((message, index) => (
               <div
                 key={index}
-                className={`flex gap-3 my-4 text-sm ${message.role === "ai" ? "bg-blue-50 dark:bg-blue-950/30 p-3 rounded-lg" : "bg-purple-50 dark:bg-purple-950/30 p-3 rounded-lg"}`}
+                className={`flex gap-3 my-4 text-sm ${message.role === "ai" ? "bg-gray-900/60 p-3 rounded-lg border border-gray-800" : "bg-gray-900/60 p-3 rounded-lg border border-gray-800"}`}
               >
                 <span className="relative flex shrink-0 overflow-hidden rounded-full w-10 h-10">
-                  <div
-                    className={`rounded-full p-2 ${message.role === "ai" ? "bg-blue-100 dark:bg-blue-900" : "bg-purple-100 dark:bg-purple-900"}`}
-                  >
-                    {message.role === "ai" ? (
-                      <Sparkles className="h-6 w-6 text-blue-600 dark:text-blue-400" />
-                    ) : (
-                      <User className="h-6 w-6 text-purple-600 dark:text-purple-400" />
-                    )}
-                  </div>
+                                      <div
+                      className={`rounded-full p-2 ${message.role === "ai" ? "bg-purple-900/50" : "bg-purple-900/50"}`}
+                    >
+                                          {message.role === "ai" ? (
+                        <Sparkles className="h-6 w-6 text-purple-400" />
+                      ) : (
+                        <User className="h-6 w-6 text-purple-400" />
+                      )}
+                    </div>
                 </span>
                 <div className="leading-relaxed flex-1">
                   <span
-                    className={`block font-bold mb-1 ${message.role === "ai" ? "text-blue-700 dark:text-blue-300" : "text-purple-700 dark:text-purple-300"}`}
+                    className={`block font-bold mb-1 ${message.role === "ai" ? "text-white" : "text-white/90"}`}
                   >
                     {message.role === "ai" ? "AI" : "You"}
                   </span>
-                  <div className="prose prose-sm dark:prose-invert max-w-none">
+                  <div className="prose prose-sm prose-invert max-w-none">
                     {message.role === "ai" && message.isTyping ? (
                       <Typewriter text={message.content} />
                     ) : (
@@ -258,7 +258,7 @@ export function AiChatButton() {
                     variant="ghost"
                     size="icon"
                     onClick={() => handleCopy(message.content)}
-                    className="text-purple-500 hover:text-purple-700 hover:bg-purple-100 dark:hover:bg-purple-900/50"
+                    className="text-purple-400 hover:text-purple-300 hover:bg-gray-800"
                   >
                     <Copy className="h-4 w-4" />
                   </Button>
@@ -266,17 +266,17 @@ export function AiChatButton() {
               </div>
             ))}
             {isLoading && (
-              <div className="flex gap-3 my-4 text-sm bg-blue-50 dark:bg-blue-950/30 p-3 rounded-lg animate-pulse">
+              <div className="flex gap-3 my-4 text-sm bg-gray-900/60 p-3 rounded-lg border border-gray-800 animate-pulse">
                 <span className="relative flex shrink-0 overflow-hidden rounded-full w-10 h-10">
-                  <div className="rounded-full bg-blue-100 dark:bg-blue-900 p-2">
-                    <Sparkles className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                  <div className="rounded-full bg-purple-900/50 p-2">
+                    <Sparkles className="h-6 w-6 text-purple-400" />
                   </div>
                 </span>
                 <div className="leading-relaxed flex-1">
-                  <span className="block font-bold mb-1 text-blue-700 dark:text-blue-300">AI</span>
-                  <div className="flex items-center">
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin text-blue-600 dark:text-blue-400" />
-                    <span className="text-blue-600 dark:text-blue-400">Thinking...</span>
+                  <span className="block font-bold mb-1 text-white">AI</span>
+                  <div className="flex items-center text-white/80">
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin text-purple-400" />
+                    <span>Thinking...</span>
                   </div>
                 </div>
               </div>
@@ -289,7 +289,7 @@ export function AiChatButton() {
             <form onSubmit={handleSubmit} className="flex flex-col space-y-3">
               <div className="flex items-center space-x-2">
                 <Input
-                  className="flex-1 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-md"
+                  className="flex-1 bg-gray-950 border-gray-800 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-purple-600 focus:border-purple-600 rounded-md"
                   placeholder="Type your message..."
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
@@ -302,19 +302,19 @@ export function AiChatButton() {
                   onClick={handleImprovePrompt}
                   disabled={isLoading || isImproving || !inputValue.trim()}
                   title="Improve prompt"
-                  className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 hover:bg-purple-50 dark:hover:bg-purple-900/30"
+                  className="bg-gray-950 border-gray-800 hover:bg-gray-900"
                 >
                   {isImproving ? (
-                    <Loader2 className="h-5 w-5 animate-spin text-purple-600" />
+                    <Loader2 className="h-5 w-5 animate-spin text-purple-400" />
                   ) : (
-                    <Wand2 className="h-5 w-5 text-purple-600" />
+                    <Wand2 className="h-5 w-5 text-purple-400" />
                   )}
                 </Button>
               </div>
               <Button
                 type="submit"
                 disabled={isLoading || !inputValue.trim()}
-                className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white py-2 rounded-md transition-all"
+                className="w-full bg-primary hover:bg-primary/90 text-white py-2 rounded-md transition-all"
               >
                 <Send className="h-5 w-5 mr-2" />
                 Send

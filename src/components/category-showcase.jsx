@@ -27,7 +27,7 @@ export function CategoryShowcase() {
 	return (
 		<section className="py-16 px-6 bg-gray-950">
 			<div className="mx-auto max-w-7xl">
-				<h2 className="text-2xl font-bold tracking-tight text-white mb-8">
+				<h2 className="text-2xl font-bold tracking-tight text-white mb-8 text-center">
 					Explore the App Store
 				</h2>
 				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

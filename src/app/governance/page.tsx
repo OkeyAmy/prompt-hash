@@ -11,9 +11,9 @@ import { Clock, Check, X } from "lucide-react"
 
 export default function GovernancePage() {
   return (
-    <div className="min-h-screen bg-gray-950 text-white flex flex-col bg-gradient-to-r from-purple-400 to-blue-500">
+    <div className="min-h-screen bg-gray-950 text-white flex flex-col">
       <Navigation />
-      <main className="flex-1 container py-8">
+      <main className="flex-1 container py-10">
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
             <h1 className="text-3xl font-bold mb-2">DAO Governance</h1>

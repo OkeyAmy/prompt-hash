@@ -72,7 +72,7 @@ export function FeaturedPrompts() {
 							<Card
 								key={prompt.id}
 								onClick={() => handleCardClick(prompt)}
-								className="bg-gray-800 border-gray-700 overflow-hidden group hover:border-purple-500 transition-all cursor-pointer"
+								className="bg-gray-900 border-gray-800 overflow-hidden group hover:border-purple-500 transition-all cursor-pointer"
 							>
 								<div className="aspect-video relative overflow-hidden">
 									<img

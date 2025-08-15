@@ -126,7 +126,7 @@ export function ChatArea({
   
 
 	return (
-		<div className="flex-1 flex flex-col h-full bg-gradient-to-r from-purple-400 to-blue-500 backdrop-blur-sm shadow-lg max-w-full">
+		<div className="flex-1 flex flex-col h-full bg-gray-950 max-w-full">
 			{/* Chat header */}
 			<div className="flex justify-between items-center p-2 sm:p-4 border-b border-gray-200 bg-white/80 backdrop-blur-sm">
 				<div className="flex items-center gap-2">
@@ -174,7 +174,7 @@ export function ChatArea({
 			</div>
 
 			{/* Messages area */}
-			<div className="flex-1 overflow-y-auto p-2 sm:p-4 space-y-4 sm:space-y-6 bg-white/50">
+			<div className="flex-1 overflow-y-auto p-2 sm:p-4 space-y-4 sm:space-y-6 bg-gray-900/50">
 				{conversation.map((message) => (
 					<div
 						key={message.id}
@@ -305,36 +305,36 @@ export function ChatArea({
 			</div>
 
 			{/* Input area */}
-			<div className="p-2 sm:p-4 border-t border-gray-200 bg-white/80 backdrop-blur-sm">
+			<div className="p-2 sm:p-4 border-t border-gray-800 bg-gray-900/60 backdrop-blur-sm">
 				<form onSubmit={handleSubmit} className="flex flex-col gap-3">
 					<div className="flex items-center gap-2">
-						<Input
-							className="flex-1 border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
-							placeholder="Type a message..."
-							value={inputValue}
-							onChange={(e) => setInputValue(e.target.value)}
-							disabled={isTyping}
-						/>
-						<Button
-							type="button"
-							variant="outline"
-							size="icon"
-							onClick={handleImprovePrompt}
-							disabled={isTyping || isImproving || !inputValue.trim()}
-							title="Improve prompt"
-							className="bg-white border-gray-300 hover:bg-blue-50 transition-all"
-						>
-							{isImproving ? (
-								<Loader2 className="h-5 w-5 animate-spin text-blue-600" />
-							) : (
-								<Wand2 className="h-5 w-5 text-blue-600" />
-							)}
-						</Button>
+											<Input
+						className="flex-1 border-gray-700 focus:ring-2 focus:ring-purple-600 focus:border-purple-600 bg-gray-950 text-white placeholder:text-gray-400"
+						placeholder="Type a message..."
+						value={inputValue}
+						onChange={(e) => setInputValue(e.target.value)}
+						disabled={isTyping}
+					/>
+											<Button
+						type="button"
+						variant="outline"
+						size="icon"
+						onClick={handleImprovePrompt}
+						disabled={isTyping || isImproving || !inputValue.trim()}
+						title="Improve prompt"
+						className="bg-gray-950 border-gray-700 hover:bg-gray-900 transition-all"
+					>
+						{isImproving ? (
+							<Loader2 className="h-5 w-5 animate-spin text-purple-500" />
+						) : (
+							<Wand2 className="h-5 w-5 text-purple-500" />
+						)}
+					</Button>
 					</div>
 					<Button
 						type="submit"
 						disabled={isTyping || !inputValue.trim()}
-						className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white transition-all flex items-center gap-2"
+						className="bg-primary hover:bg-primary/90 text-white transition-all flex items-center gap-2"
 					>
 						<Send size={16} />
 						Send
