@@ -12,6 +12,7 @@ interface SidebarProps {
 export function Sidebar({ isOpen, onClose, onToggleMobileMenu }: SidebarProps) {
   const navItems = [
     { icon: <LayoutGrid size={18} />, label: "Tasks", active: true },
+    { icon: <Zap size={18} />, label: "Compare" },
     { icon: <Zap size={18} />, label: "Functions" },
     { icon: <Link size={18} />, label: "Integrations" },
     { icon: <Users size={18} />, label: "Users" },
@@ -33,14 +34,14 @@ export function Sidebar({ isOpen, onClose, onToggleMobileMenu }: SidebarProps) {
       </Button>
 
       <div
-        className={`w-[192px] border-r border-gray-200 h-full flex-shrink-0 bg-white/90 backdrop-blur-sm shadow-lg transition-all duration-300 ${isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"} z-40 fixed md:relative`}
+        className={`w-[192px] border-r border-gray-800 h-full flex-shrink-0 bg-gray-900/80 backdrop-blur-sm shadow-lg transition-all duration-300 ${isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"} z-40 fixed md:relative`}
       >
-        <div className="p-4 border-b border-gray-200">
+        <div className="p-4 border-b border-gray-800">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 flex items-center justify-center">
               <Zap size={16} className="text-white" />
             </div>
-            <h2 className="font-semibold text-lg">PromptHub Agent</h2>
+            <h2 className="font-semibold text-lg text-foreground">PromptHub Agent</h2>
           </div>
         </div>
 
@@ -50,7 +51,7 @@ export function Sidebar({ isOpen, onClose, onToggleMobileMenu }: SidebarProps) {
               <li key={index}>
                 <a
                   href="#"
-                  className={`flex items-center gap-3 px-4 py-2 hover:bg-gray-100 transition-colors ${item.active ? "text-blue-600 bg-blue-50" : "text-gray-700"}`}
+                  className={`flex items-center gap-3 px-4 py-2 hover:bg-gray-800 transition-colors ${item.active ? "text-purple-400 bg-gray-800" : "text-gray-300"}`}
                 >
                   {item.icon}
                   <span className="text-sm">{item.label}</span>
@@ -62,7 +63,7 @@ export function Sidebar({ isOpen, onClose, onToggleMobileMenu }: SidebarProps) {
       </div>
 
       {/* Overlay for mobile */}
-      {isOpen && <div className="md:hidden fixed inset-0 bg-black/20 backdrop-blur-sm z-30" onClick={onClose}></div>}
+      {isOpen && <div className="md:hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-30" onClick={onClose}></div>}
     </>
   )
 }

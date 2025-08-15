@@ -5,6 +5,7 @@ import { Sidebar } from "@/components/sidebar"
 import { ChatArea } from "@/components/chat-area"
 import { ConversationDetails } from "@/components/conversation-details"
 import { getChatResponse, improvePrompt, type AIModel } from "@/lib/api"
+import ComparePanel from "@/components/compare-panel"
 
 export function ChatInterface() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -177,6 +178,11 @@ export function ChatInterface() {
 
       {/* Main Chat Area */}
       <div className="flex flex-1 flex-col md:flex-row h-full ">
+        {/* Compare panel on the left on large screens */}
+        <div className="hidden lg:flex lg:w-1/2 border-r border-gray-800">
+          <ComparePanel />
+        </div>
+
         <ChatArea
           conversation={conversation}
           isTyping={isTyping}
