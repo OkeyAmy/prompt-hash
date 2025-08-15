@@ -11,6 +11,7 @@ export function ChatInterface() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isDetailsOpen, setIsDetailsOpen] = useState(true)
   const [activeTab, setActiveTab] = useState<"actions" | "customer" | "settings">("actions")
+  const [leftNavActive, setLeftNavActive] = useState<"Tasks" | "Compare">("Tasks")
   const [conversation, setConversation] = useState<Message[]>([
     {
       id: "1",
@@ -174,30 +175,34 @@ export function ChatInterface() {
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
         onToggleMobileMenu={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        activeLabel={leftNavActive}
+        onSelect={(label) => setLeftNavActive(label as any)}
       />
 
       {/* Main Chat Area */}
       <div className="flex flex-1 flex-col md:flex-row h-full ">
-        {/* Compare panel on the left on large screens */}
-        <div className="hidden lg:flex lg:w-1/2 border-r border-gray-800">
-          <ComparePanel />
+        {/* Center content switches based on leftNavActive */}
+        <div className="flex-1 flex">
+          {leftNavActive === "Tasks" ? (
+            <ChatArea
+              conversation={conversation}
+              isTyping={isTyping}
+              customerName={customerName}
+              onSendMessage={handleSendMessage}
+              onImprovePrompt={handleImprovePrompt}
+              onReaction={handleReaction}
+              onSaveConversation={handleSaveConversation}
+              onCloseConversation={handleCloseConversation}
+              inputValue={inputValue}
+              setInputValue={setInputValue}
+              selectedModel={selectedModel}
+              setSelectedModel={setSelectedModel}
+              onToggleDetails={() => setIsDetailsOpen(!isDetailsOpen)}
+            />
+          ) : (
+            <ComparePanel />
+          )}
         </div>
-
-        <ChatArea
-          conversation={conversation}
-          isTyping={isTyping}
-          customerName={customerName}
-          onSendMessage={handleSendMessage}
-          onImprovePrompt={handleImprovePrompt}
-          onReaction={handleReaction}
-          onSaveConversation={handleSaveConversation}
-          onCloseConversation={handleCloseConversation}
-          inputValue={inputValue}
-          setInputValue={setInputValue}
-          selectedModel={selectedModel}
-          setSelectedModel={setSelectedModel}
-          onToggleDetails={() => setIsDetailsOpen(!isDetailsOpen)}
-        />
 
         {/* Conversation Details */}
         <ConversationDetails

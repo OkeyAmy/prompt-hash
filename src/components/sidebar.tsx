@@ -7,11 +7,13 @@ interface SidebarProps {
   isOpen: boolean
   onClose: () => void
   onToggleMobileMenu: () => void
+  activeLabel: string
+  onSelect: (label: string) => void
 }
 
-export function Sidebar({ isOpen, onClose, onToggleMobileMenu }: SidebarProps) {
+export function Sidebar({ isOpen, onClose, onToggleMobileMenu, activeLabel, onSelect }: SidebarProps) {
   const navItems = [
-    { icon: <LayoutGrid size={18} />, label: "Tasks", active: true },
+    { icon: <LayoutGrid size={18} />, label: "Tasks" },
     { icon: <Zap size={18} />, label: "Compare" },
     { icon: <Zap size={18} />, label: "Functions" },
     { icon: <Link size={18} />, label: "Integrations" },
@@ -47,17 +49,21 @@ export function Sidebar({ isOpen, onClose, onToggleMobileMenu }: SidebarProps) {
 
         <nav className="py-4">
           <ul className="space-y-1">
-            {navItems.map((item, index) => (
-              <li key={index}>
-                <a
-                  href="#"
-                  className={`flex items-center gap-3 px-4 py-2 hover:bg-gray-800 transition-colors ${item.active ? "text-purple-400 bg-gray-800" : "text-gray-300"}`}
-                >
-                  {item.icon}
-                  <span className="text-sm">{item.label}</span>
-                </a>
-              </li>
-            ))}
+            {navItems.map((item, index) => {
+              const isActive = item.label === activeLabel
+              return (
+                <li key={index}>
+                  <button
+                    type="button"
+                    onClick={() => onSelect(item.label)}
+                    className={`w-full text-left flex items-center gap-3 px-4 py-2 hover:bg-gray-800 transition-colors ${isActive ? "text-purple-400 bg-gray-800" : "text-gray-300"}`}
+                  >
+                    {item.icon}
+                    <span className="text-sm">{item.label}</span>
+                  </button>
+                </li>
+              )
+            })}
           </ul>
         </nav>
       </div>
