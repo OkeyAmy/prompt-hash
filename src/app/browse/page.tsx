@@ -211,7 +211,7 @@ export default function BrowsePage() {
   });
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-950">
+    <div className="min-h-screen flex flex-col bg-gray-950 text-foreground">
       <Navigation />
       <main className="flex-1 container py-10">
         <div className="flex flex-col md:flex-row gap-10">
@@ -298,7 +298,7 @@ export default function BrowsePage() {
             ) : error ? (
               <div className="text-center text-red-500 p-4">{error}</div>
             ) : filteredPrompts.length === 0 ? (
-              <div className="text-center text-gray-500 p-4">
+              <div className="text-center text-gray-400 p-4">
                 No prompts found matching your criteria.
               </div>
             ) : (

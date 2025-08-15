@@ -33,35 +33,35 @@ export function Navigation() {
           <nav className="flex items-center space-x-6 text-sm font-medium">
             <Link
               href="/browse"
-              className="transition-colors hover:text-gray-300 text-white flex items-center gap-1"
+              className="transition-colors hover:text-gray-300 text-foreground flex items-center gap-1"
             >
               <Search className="h-4 w-4" />
               <span>Browse</span>
             </Link>
             <Link
               href="/sell"
-              className="transition-colors hover:text-gray-300 text-white flex items-center gap-1"
+              className="transition-colors hover:text-gray-300 text-foreground flex items-center gap-1"
             >
               <ShoppingCart className="h-4 w-4" />
               <span>Sell</span>
             </Link>
             <Link
               href="/governance"
-              className="transition-colors hover:text-gray-300 text-white flex items-center gap-1"
+              className="transition-colors hover:text-gray-300 text-foreground flex items-center gap-1"
             >
               <Settings className="h-4 w-4" />
               <span>Governance</span>
             </Link>
             <Link
               href="/profile"
-              className="transition-colors hover:text-gray-300 text-white flex items-center gap-1"
+              className="transition-colors hover:text-gray-300 text-foreground flex items-center gap-1"
             >
               <User className="h-4 w-4" />
               <span>Profile</span>
             </Link>
             <Link
               href="/chat"
-              className="transition-colors hover:text-gray-300 text-white flex items-center gap-1"
+              className="transition-colors hover:text-gray-300 text-foreground flex items-center gap-1"
             >
               <MessageCircle className="h-4 w-4" />
               <span>Chat</span>

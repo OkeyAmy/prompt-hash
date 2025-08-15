@@ -11,7 +11,7 @@ import { StarIcon, Wallet, History, Settings } from "lucide-react";
 
 export default function ProfilePage() {
 	return (
-		<div className="min-h-screen bg-gray-950 text-white flex flex-col">
+		<div className="min-h-screen bg-gray-950 text-foreground flex flex-col">
 			<Navigation />
 			<main className="flex-1 container py-10">
 				<div className="max-w-4xl mx-auto">

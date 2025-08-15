@@ -9,7 +9,7 @@ import { PromptListings } from "./PromptListings";
 
 export default function SellPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-gray-950">
+    <div className="min-h-screen flex flex-col bg-gray-950 text-foreground">
       <Navigation />
       <main className="flex-1 container py-10">
         <div className="max-w-5xl mx-auto">

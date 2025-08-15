@@ -128,7 +128,7 @@ export function ChatArea({
 	return (
 		<div className="flex-1 flex flex-col h-full bg-gray-950 max-w-full">
 			{/* Chat header */}
-			<div className="flex justify-between items-center p-2 sm:p-4 border-b border-gray-200 bg-white/80 backdrop-blur-sm">
+			<div className="flex justify-between items-center p-2 sm:p-4 border-b border-gray-800 bg-gray-900/60 backdrop-blur-sm">
 				<div className="flex items-center gap-2">
 					<MessageSquare size={18} className="text-blue-600" />
 					<span className="font-semibold">Chat Playground</span>
@@ -138,7 +138,7 @@ export function ChatArea({
 						title="Select AI model"
 						value={selectedModel}
 						onChange={(e) => setSelectedModel(e.target.value as AIModel)}
-						className="text-xs sm:text-sm border rounded-md py-1 px-1 sm:px-2 bg-white border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+						className="text-xs sm:text-sm border rounded-md py-1 px-1 sm:px-2 bg-gray-900/60 border-gray-800 text-foreground focus:ring-2 focus:ring-purple-600 focus:border-purple-600"
 					>
 						<option value="deepseek-r1:70b">deepseek-r1:70b</option>
 						<option value="llama3.2-vision">llama3.2-vision</option>
