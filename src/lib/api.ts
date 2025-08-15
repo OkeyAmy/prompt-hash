@@ -5,6 +5,7 @@ const API_BASE_URL = "https://secret-ai-gateway.onrender.com";
 
 // Available models (Render API)
 export type AIModel = "gemini-2.5-flash" | "gemini-2.5-pro" | "gemini-2.0-flash";
+export type ImageModel = "gemini-2.0-flash-exp-image-generation" | "gemini-2.0-flash-preview-image-generation";
 
 // Function to get available models
 export async function getModels() {
@@ -65,6 +66,32 @@ export async function getChatResponse(
 		return data;
 	} catch (error) {
 		console.error("Error getting chat response:", error);
+		throw error;
+	}
+}
+
+// Generate image (GET)
+export async function generateImage(
+	prompt: string,
+	model: ImageModel = "gemini-2.0-flash-preview-image-generation"
+) {
+	try {
+		const q = new URLSearchParams({ prompt, model });
+		const response = await fetch(`${API_BASE_URL}/api/generate/image?${q.toString()}`, {
+			method: "GET",
+			headers: { Accept: "application/json" },
+			cache: "no-store",
+			credentials: "omit",
+		});
+		if (!response.ok) {
+			const errorText = await response.text();
+			console.error(`Generate image API error: ${response.status}`, errorText);
+			throw new Error(`Generate image API error: ${response.status}`);
+		}
+		const result = await response.json();
+		return result?.response as string;
+	} catch (error) {
+		console.error("Error generating image:", error);
 		throw error;
 	}
 }
