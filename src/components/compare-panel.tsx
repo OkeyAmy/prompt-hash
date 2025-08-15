@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { getChatResponse, type AIModel, generateImage, improvePrompt, type ImageModel } from "@/lib/api"
-import { Wand2, GitCompareArrows, Image as ImageIcon, Video, Star } from "lucide-react"
+import { Wand2, GitCompareArrows, Image as ImageIcon, Video, Star, Loader2 } from "lucide-react"
 
 export default function ComparePanel() {
   const [prompt, setPrompt] = useState("")
@@ -14,6 +14,7 @@ export default function ComparePanel() {
   const [imageModelRight, setImageModelRight] = useState<ImageModel>("gemini-2.0-flash-preview-image-generation")
   const [compareType, setCompareType] = useState<"text" | "image" | "video">("text")
   const [isLoading, setIsLoading] = useState(false)
+  const [isImproving, setIsImproving] = useState(false)
   const [leftResult, setLeftResult] = useState<string>("")
   const [rightResult, setRightResult] = useState<string>("")
 
@@ -37,13 +38,17 @@ export default function ComparePanel() {
         ])
         setLeftResult(formatText(left))
         setRightResult(formatText(right))
-      } else {
+      } else if (compareType === "image") {
         const [left, right] = await Promise.all([
           generateImage(prompt, imageModelLeft),
           generateImage(prompt, imageModelRight),
         ])
         setLeftResult(left || "")
         setRightResult(right || "")
+      } else {
+        // Video coming soon placeholder
+        setLeftResult("Video comparison coming soon...")
+        setRightResult("Video comparison coming soon...")
       }
     } catch (e) {
       setLeftResult("Failed to get response.")
@@ -55,9 +60,14 @@ export default function ComparePanel() {
 
   const handleImprove = async () => {
     if (!prompt.trim()) return
-    const target = compareType === "image" ? "image" : "text"
-    const improved = await improvePrompt(prompt, target)
-    if (improved) setPrompt(improved)
+    setIsImproving(true)
+    try {
+      const target = compareType === "image" ? "image" : "text"
+      const improved = await improvePrompt(prompt, target)
+      if (improved) setPrompt(improved)
+    } finally {
+      setIsImproving(false)
+    }
   }
 
   return (
@@ -132,22 +142,26 @@ export default function ComparePanel() {
         <div className="flex gap-2 items-center">
           <div className="relative flex-1">
             <Input
-              className="w-full pl-8 border-gray-800 bg-gray-950 text-foreground placeholder:text-gray-500 focus:ring-2 focus:ring-purple-600 focus:border-purple-600"
+              className={`w-full pr-9 border-gray-800 bg-gray-950 text-foreground placeholder:text-gray-500 focus:ring-2 focus:ring-purple-600 focus:border-purple-600 ${isImproving ? "ring-2 ring-purple-600" : ""}`}
               placeholder={compareType === "text" ? "Enter a text prompt to compare models..." : "Describe the image to generate and compare..."}
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
+              disabled={isImproving || isLoading}
             />
             <button
               type="button"
               onClick={handleImprove}
-              className="absolute left-2 top-1/2 -translate-y-1/2 text-purple-400 hover:text-purple-300"
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-purple-400 hover:text-purple-300"
               title="Improve prompt"
+              disabled={isImproving || isLoading || !prompt.trim()}
             >
-              <Star className="h-4 w-4" />
+              {isImproving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Star className="h-4 w-4" />}
             </button>
           </div>
           <Button onClick={runCompare} disabled={isLoading || !prompt.trim()} className="bg-primary hover:bg-primary/90">
-            {compareType === "text" ? (
+            {isLoading ? (
+              <Loader2 className="h-5 w-5 animate-spin" />
+            ) : compareType === "text" ? (
               <Wand2 className="h-5 w-5" />
             ) : (
               <ImageIcon className="h-5 w-5" />
@@ -159,13 +173,13 @@ export default function ComparePanel() {
 
       {/* Results */}
       <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-0 overflow-auto">
-        <div className="border-r border-gray-800 min-h-0 flex flex-col">
+        <div className="border-r border-gray-800 min-h-0 flex flex-col relative">
           <div className="px-4 py-2 border-b border-gray-800 text-sm text-gray-400">
             {compareType === "text" ? modelLeft : imageModelLeft}
           </div>
           <div className="p-4 overflow-auto text-sm leading-6 space-y-4">
             {isLoading ? (
-              <div className="text-gray-400">Generating...</div>
+              <div className="flex items-center justify-center py-12 text-gray-400"><Loader2 className="h-5 w-5 animate-spin mr-2" /> Generating...</div>
             ) : compareType === "text" ? (
               <div className="whitespace-pre-wrap break-words text-foreground">{leftResult}</div>
             ) : leftResult ? (
@@ -175,13 +189,13 @@ export default function ComparePanel() {
             )}
           </div>
         </div>
-        <div className="min-h-0 flex flex-col">
+        <div className="min-h-0 flex flex-col relative">
           <div className="px-4 py-2 border-b border-gray-800 text-sm text-gray-400">
             {compareType === "text" ? modelRight : imageModelRight}
           </div>
           <div className="p-4 overflow-auto text-sm leading-6 space-y-4">
             {isLoading ? (
-              <div className="text-gray-400">Generating...</div>
+              <div className="flex items-center justify-center py-12 text-gray-400"><Loader2 className="h-5 w-5 animate-spin mr-2" /> Generating...</div>
             ) : compareType === "text" ? (
               <div className="whitespace-pre-wrap break-words text-foreground">{rightResult}</div>
             ) : rightResult ? (
