@@ -1,7 +1,6 @@
 "use client";
 
 import { Navigation } from "@/components/navigation";
-import { Footer } from "@/components/footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CreatePromptForm } from "./CreatePromptForm";
@@ -36,7 +35,6 @@ export default function SellPage() {
           </Tabs>
         </div>
       </main>
-      <Footer />
     </div>
   );
 }

@@ -1,7 +1,6 @@
 "use client"
 
 import { Navigation } from "@/components/navigation"
-import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -102,7 +101,6 @@ export default function GovernancePage() {
           </Tabs>
         </div>
       </main>
-      <Footer />
     </div>
   )
 }

@@ -1,6 +1,5 @@
 import { ChatInterface } from "@/components/chat-interface";
 import { Navigation } from "@/components/navigation";
-import { Footer } from "@/components/footer";
 
 export default function Home() {
 	return (
@@ -9,7 +8,6 @@ export default function Home() {
 			<main className="flex-1">
 				<ChatInterface />
 			</main>
-			<Footer />
 		</div>
 	);
 }
