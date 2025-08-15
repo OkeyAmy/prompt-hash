@@ -275,7 +275,7 @@ export function CreatePromptForm() {
             name="image"
             value={formData.image}
             onChange={handleChange}
-            className={errors.image ? "border-red-500" : "border-purple-400"}
+            className={`${errors.image ? "border-red-500" : "border-purple-400"} bg-gray-900/60 border-gray-800 text-foreground placeholder:text-gray-500`}
             disabled={isProcessing}
           />
           {errors.image && (
@@ -293,7 +293,7 @@ export function CreatePromptForm() {
             name="title"
             value={formData.title}
             onChange={handleChange}
-            className={errors.title ? "border-red-500" : "border-purple-400"}
+            className={`${errors.title ? "border-red-500" : "border-purple-400"} bg-gray-900/60 border-gray-800 text-foreground placeholder:text-gray-500`}
             disabled={isProcessing}
           />
           {errors.title && (
@@ -329,7 +329,7 @@ export function CreatePromptForm() {
           name="content"
           value={formData.content}
           onChange={handleChange}
-          className={errors.content ? "border-red-500" : "border-purple-400"}
+          className={`${errors.content ? "border-red-500" : "border-purple-400"} bg-gray-900/60 border-gray-800 text-foreground placeholder:text-gray-500`}
           rows={4}
           disabled={isProcessing}
         />
@@ -353,9 +353,7 @@ export function CreatePromptForm() {
             disabled={isProcessing}
           >
             <SelectTrigger
-              className={
-                errors.category ? "border-red-500" : "border-purple-400"
-              }
+              className={`${errors.category ? "border-red-500" : "border-purple-400"} bg-gray-900/60 border-gray-800 text-foreground`}
             >
               <SelectValue placeholder="Select category" />
             </SelectTrigger>
@@ -389,8 +387,7 @@ export function CreatePromptForm() {
               step="1"
               min={0.0001}
               max={1000}
-              className={`pl-9 ${errors.price ? "border-red-500" : "border-purple-400"
-                }`}
+              className={`pl-9 ${errors.price ? "border-red-500" : "border-purple-400"} bg-gray-900/60 border-gray-800 text-foreground placeholder:text-gray-500`}
               disabled={isProcessing}
             />
           </div>
@@ -413,7 +410,7 @@ export function CreatePromptForm() {
           onChange={handleChange}
           min="1"
           max="5"
-          className={errors.rating ? "border-red-500" : "border-purple-400"}
+          className={`${errors.rating ? "border-red-500" : "border-purple-400"} bg-gray-900/60 border-gray-800 text-foreground placeholder:text-gray-500`}
           disabled={isProcessing}
         />
         {errors.rating && (

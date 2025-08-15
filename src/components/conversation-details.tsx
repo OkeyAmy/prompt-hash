@@ -174,7 +174,7 @@ export function ConversationDetails({
             <div className="space-y-2">
               <h3 className="font-medium text-sm">Recent activity</h3>
               <div className="space-y-2 text-sm">
-                <div className="p-2 border border-gray-200 rounded-md hover:border-blue-300 transition-colors">
+                <div className="p-2 border border-gray-800 rounded-md hover:border-gray-700 transition-colors">
                   <div className="flex items-center">
                     <CreditCard size={14} className="mr-2 text-blue-600" />
                     <p className="font-medium">Payment received</p>
@@ -184,7 +184,7 @@ export function ConversationDetails({
                     <p className="text-gray-500 text-xs">July 15, 2024</p>
                   </div>
                 </div>
-                <div className="p-2 border border-gray-200 rounded-md hover:border-blue-300 transition-colors">
+                <div className="p-2 border border-gray-800 rounded-md hover:border-gray-700 transition-colors">
                   <div className="flex items-center">
                     <Zap size={14} className="mr-2 text-orange-600" />
                     <p className="font-medium">Support ticket #45678</p>
@@ -194,7 +194,7 @@ export function ConversationDetails({
                     <p className="text-gray-500 text-xs">June 28, 2024</p>
                   </div>
                 </div>
-                <div className="p-2 border border-gray-200 rounded-md hover:border-blue-300 transition-colors">
+                <div className="p-2 border border-gray-800 rounded-md hover:border-gray-700 transition-colors">
                   <div className="flex items-center">
                     <User size={14} className="mr-2 text-purple-600" />
                     <p className="font-medium">Account updated</p>
