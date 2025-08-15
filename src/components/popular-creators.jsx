@@ -59,7 +59,7 @@ export function PopularCreators() {
 										className="w-16 h-16 rounded-full object-cover border-2 border-purple-500"
 									/>
 									<div>
-										<h3 className="font-semibold text-white">{creator.name}</h3>
+										<h3 className="font-semibold text-foreground">{creator.name}</h3>
 										<p className="text-sm text-gray-400">
 											{creator.prompts} prompts
 										</p>

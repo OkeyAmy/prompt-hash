@@ -130,7 +130,7 @@ export function TrendingPrompts() {
 									</Badge>
 								</div>
 								<CardContent className="p-4">
-									<h3 className="font-medium text-white truncate">
+									<h3 className="font-medium text-foreground truncate">
 										{prompt.title}
 									</h3>
 									<div className="flex items-center gap-1 text-yellow-500 mt-1">

@@ -221,7 +221,7 @@ export function AiChatButton() {
           </div>
 
           {/* Chat Container */}
-          <div className="flex-1 overflow-y-auto pr-4 space-y-4 ">
+          <div className="flex-1 overflow-y-auto pr-4 space-y-4 text-foreground">
             {messages.map((message, index) => (
               <div
                 key={index}
@@ -285,7 +285,7 @@ export function AiChatButton() {
           </div>
 
           {/* Input Box */}
-          <div className="pt-4 border-t border-gray-200 dark:border-gray-700 mt-auto">
+                      <div className="pt-4 border-t border-gray-800 mt-auto">
             <form onSubmit={handleSubmit} className="flex flex-col space-y-3">
               <div className="flex items-center space-x-2">
                 <Input

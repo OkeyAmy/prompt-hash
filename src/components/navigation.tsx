@@ -15,7 +15,7 @@ import { CustomConnectButton } from "./CustomConnectButton";
 
 export function Navigation() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-gray-800 bg-gray-950/80 backdrop-blur supports-[backdrop-filter]:bg-gray-950/60">
+         <header className="sticky top-0 z-50 w-full border-b border-gray-800 bg-gray-950/80 text-foreground backdrop-blur supports-[backdrop-filter]:bg-gray-950/60">
       <div className="container flex h-16 items-center gap-4">
         <div className="mr-4 hidden md:flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">

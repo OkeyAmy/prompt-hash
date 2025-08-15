@@ -174,7 +174,7 @@ export function ChatArea({
 			</div>
 
 			{/* Messages area */}
-			<div className="flex-1 overflow-y-auto p-2 sm:p-4 space-y-4 sm:space-y-6 bg-gray-900/50">
+			<div className="flex-1 overflow-y-auto p-2 sm:p-4 space-y-4 sm:space-y-6 bg-gray-900/50 text-foreground">
 				{conversation.map((message) => (
 					<div
 						key={message.id}

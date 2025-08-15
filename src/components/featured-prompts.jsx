@@ -85,7 +85,7 @@ export function FeaturedPrompts() {
 									</Badge>
 								</div>
 								<CardContent className="p-4">
-									<h3 className="text-lg font-semibold text-white">
+									<h3 className="text-lg font-semibold text-foreground">
 										{prompt.title}
 									</h3>
 									<p className="mt-2 text-sm text-gray-300 line-clamp-2">

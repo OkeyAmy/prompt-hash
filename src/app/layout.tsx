@@ -31,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Provider>
-      <body className="min-h-screen bg-gray-950 text-white antialiased selection:bg-primary/20 selection:text-white">{children}</body>
+      <body className="min-h-screen bg-gray-950 antialiased selection:bg-primary/20 selection:text-white">{children}</body>
       </Provider>
     </html>
   );

@@ -14,7 +14,7 @@ import FaqSection from "@/components/faq-section";
 
 export default function Home() {
 	return (
-		<div className="min-h-screen flex flex-col bg-gray-950 text-white">
+		<div className="min-h-screen flex flex-col bg-gray-950">
 			{/* Ambient background with moving particles */}
 			<div className="h-full w-full absolute inset-0 z-0">
 				<SparklesCore

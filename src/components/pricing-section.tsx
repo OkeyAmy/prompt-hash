@@ -3,7 +3,7 @@ import { Check } from "lucide-react";
 
 export default function PricingSection() {
 	return (
-		<section className="py-16 bg-black">
+		<section className="py-16 bg-black text-foreground">
 			<div className="container">
 				<div className="text-center mb-12">
 					<h2 className="text-3xl font-bold mb-4">
