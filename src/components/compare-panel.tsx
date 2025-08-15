@@ -12,7 +12,7 @@ export default function ComparePanel() {
   const [modelRight, setModelRight] = useState<AIModel>("gemini-2.5-pro")
   const [imageModelLeft, setImageModelLeft] = useState<ImageModel>("gemini-2.0-flash-preview-image-generation")
   const [imageModelRight, setImageModelRight] = useState<ImageModel>("gemini-2.0-flash-preview-image-generation")
-  const [compareType, setCompareType] = useState<"text" | "image">("text")
+  const [compareType, setCompareType] = useState<"text" | "image" | "video">("text")
   const [isLoading, setIsLoading] = useState(false)
   const [leftResult, setLeftResult] = useState<string>("")
   const [rightResult, setRightResult] = useState<string>("")
@@ -77,6 +77,7 @@ export default function ComparePanel() {
           >
             <option value="text">Text</option>
             <option value="image">Image</option>
+            <option value="video">Video (coming soon)</option>
           </select>
           {compareType === "text" ? (
             <>
@@ -157,12 +158,12 @@ export default function ComparePanel() {
       </div>
 
       {/* Results */}
-      <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-0">
+      <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-0 overflow-auto">
         <div className="border-r border-gray-800 min-h-0 flex flex-col">
           <div className="px-4 py-2 border-b border-gray-800 text-sm text-gray-400">
             {compareType === "text" ? modelLeft : imageModelLeft}
           </div>
-          <div className="p-4 overflow-auto text-sm leading-6">
+          <div className="p-4 overflow-auto text-sm leading-6 space-y-4">
             {isLoading ? (
               <div className="text-gray-400">Generating...</div>
             ) : compareType === "text" ? (
@@ -178,7 +179,7 @@ export default function ComparePanel() {
           <div className="px-4 py-2 border-b border-gray-800 text-sm text-gray-400">
             {compareType === "text" ? modelRight : imageModelRight}
           </div>
-          <div className="p-4 overflow-auto text-sm leading-6">
+          <div className="p-4 overflow-auto text-sm leading-6 space-y-4">
             {isLoading ? (
               <div className="text-gray-400">Generating...</div>
             ) : compareType === "text" ? (

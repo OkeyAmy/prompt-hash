@@ -38,8 +38,8 @@ export function ConversationDetails({
   if (!isOpen) return null
 
   return (
-    <div className="w-full md:w-[280px] border-l border-gray-200 h-full flex-shrink-0 bg-white/90 backdrop-blur-sm shadow-lg transition-all duration-300 fixed right-0 top-0 bottom-0 md:relative z-30 overflow-y-auto">
-      <div className="p-4 border-b border-gray-200">
+    <div className="w-full md:w-[280px] border-l border-gray-800 h-full flex-shrink-0 bg-gray-900/80 text-foreground backdrop-blur-sm shadow-lg transition-all duration-300 fixed right-0 top-0 bottom-0 md:relative z-30 overflow-y-auto">
+      <div className="p-4 border-b border-gray-800">
         <div className="flex justify-between items-center">
           <h2 className="font-semibold">Conversation details</h2>
           <Button
