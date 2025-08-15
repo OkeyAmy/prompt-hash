@@ -27,17 +27,17 @@ export function Sidebar({ isOpen, onClose, onToggleMobileMenu }: SidebarProps) {
         variant="ghost"
         size="icon"
         onClick={onToggleMobileMenu}
-        className="md:hidden fixed top-2 left-2 z-50 bg-white/80 backdrop-blur-sm shadow-md rounded-full h-9 w-9"
+        className="md:hidden fixed top-2 left-2 z-50 bg-deepblue-900/80 text-deepblue-50 backdrop-blur-sm shadow-md rounded-full h-9 w-9"
       >
         {isOpen ? <X size={18} /> : <Menu size={18} />}
       </Button>
 
       <div
-        className={`w-[192px] border-r border-gray-200 h-full flex-shrink-0 bg-white/90 backdrop-blur-sm shadow-lg transition-all duration-300 ${isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"} z-40 fixed md:relative`}
+        className={`w-[192px] border-r border-deepblue-700 h-full flex-shrink-0 bg-deepblue-900/90 text-deepblue-50 backdrop-blur-sm shadow-lg transition-all duration-300 ${isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"} z-40 fixed md:relative`}
       >
-        <div className="p-4 border-b border-gray-200">
+        <div className="p-4 border-b border-deepblue-700">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
               <Zap size={16} className="text-white" />
             </div>
             <h2 className="font-semibold text-lg">PromptHub Agent</h2>
@@ -50,7 +50,7 @@ export function Sidebar({ isOpen, onClose, onToggleMobileMenu }: SidebarProps) {
               <li key={index}>
                 <a
                   href="#"
-                  className={`flex items-center gap-3 px-4 py-2 hover:bg-gray-100 transition-colors ${item.active ? "text-blue-600 bg-blue-50" : "text-gray-700"}`}
+                  className={`flex items-center gap-3 px-4 py-2 hover:bg-deepblue-800 transition-colors ${item.active ? "text-white bg-deepblue-800" : "text-deepblue-100"}`}
                 >
                   {item.icon}
                   <span className="text-sm">{item.label}</span>

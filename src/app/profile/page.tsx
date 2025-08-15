@@ -11,7 +11,7 @@ import { StarIcon, Wallet, History, Settings } from "lucide-react";
 
 export default function ProfilePage() {
 	return (
-		<div className="min-h-screen bg-gray-950 text-white flex flex-col bg-gradient-to-r from-purple-400 to-blue-500">
+		<div className="min-h-screen bg-deepblue-900 text-deepblue-50 flex flex-col">
 			<Navigation />
 			<main className="flex-1 container py-8">
 				<div className="max-w-4xl mx-auto">
@@ -22,18 +22,18 @@ export default function ProfilePage() {
 						</Avatar>
 						<div className="flex-1">
 							<h1 className="text-3xl font-bold">John.atom</h1>
-							<p className="text-muted-foreground">Joined December 2023</p>
+							<p className="text-deepblue-200">Joined December 2023</p>
 							<div className="flex items-center gap-2 mt-2">
 								<StarIcon className="h-4 w-4 fill-yellow-500 text-yellow-500" />
 								<span>4.9 Rating</span>
-								<span className="text-muted-foreground">• 50 Reviews</span>
+								<span className="text-deepblue-300">• 50 Reviews</span>
 							</div>
 						</div>
 						<Button>Edit Profile</Button>
 					</div>
 
 					<Tabs defaultValue="activity">
-						<TabsList className="grid w-full grid-cols-3">
+						<TabsList className="grid w-full grid-cols-3 bg-deepblue-800">
 							<TabsTrigger value="activity">Activity</TabsTrigger>
 							<TabsTrigger value="wallet">Wallet</TabsTrigger>
 							<TabsTrigger value="settings">Settings</TabsTrigger>
@@ -41,7 +41,7 @@ export default function ProfilePage() {
 
 						<TabsContent value="activity" className="mt-6">
 							<div className="grid gap-6">
-								<Card>
+								<Card className="border-deepblue-700 bg-white/70 dark:bg-deepblue-800/60 backdrop-blur">
 									<CardHeader>
 										<CardTitle className="flex items-center gap-2">
 											<History className="h-5 w-5" />
@@ -51,27 +51,27 @@ export default function ProfilePage() {
 									<CardContent>
 										<div className="space-y-4">
 											{/* Activity Items */}
-											<div className="flex justify-between items-center py-2 border-b">
+											<div className="flex justify-between items-center py-2 border-b border-deepblue-700/40">
 												<div>
 													<p className="font-medium">
 														Purchased "SEO Content Optimizer"
 													</p>
-													<p className="text-sm text-muted-foreground">
+													<p className="text-sm text-deepblue-400">
 														2 days ago
 													</p>
 												</div>
-												<Badge>0.08 Atom</Badge>
+												<Badge className="bg-primary text-white">0.08 Atom</Badge>
 											</div>
-											<div className="flex justify-between items-center py-2 border-b">
+											<div className="flex justify-between items-center py-2 border-b border-deepblue-700/40">
 												<div>
 													<p className="font-medium">
 														Sold "Creative Story Generator"
 													</p>
-													<p className="text-sm text-muted-foreground">
+													<p className="text-sm text-deepblue-400">
 														5 days ago
 													</p>
 												</div>
-												<Badge>0.1 Atom</Badge>
+												<Badge className="bg-primary text-white">0.1 Atom</Badge>
 											</div>
 										</div>
 									</CardContent>
@@ -80,7 +80,7 @@ export default function ProfilePage() {
 						</TabsContent>
 
 						<TabsContent value="wallet" className="mt-6">
-							<Card>
+							<Card className="border-deepblue-700 bg-white/70 dark:bg-deepblue-800/60 backdrop-blur">
 								<CardHeader>
 									<CardTitle className="flex items-center gap-2">
 										<Wallet className="h-5 w-5" />
@@ -90,13 +90,13 @@ export default function ProfilePage() {
 								<CardContent>
 									<div className="space-y-6">
 										<div>
-											<p className="text-sm text-muted-foreground">
+											<p className="text-sm text-deepblue-400">
 												Connected Wallet
 											</p>
 											<p className="font-mono">cosmos...x0dq</p>
 										</div>
 										<div>
-											<p className="text-sm text-muted-foreground">Balance</p>
+											<p className="text-sm text-deepblue-400">Balance</p>
 											<p className="text-2xl font-bold">2.5 Atom</p>
 										</div>
 										<Button className="w-full">Withdraw Funds</Button>
@@ -106,7 +106,7 @@ export default function ProfilePage() {
 						</TabsContent>
 
 						<TabsContent value="settings" className="mt-6">
-							<Card>
+							<Card className="border-deepblue-700 bg-white/70 dark:bg-deepblue-800/60 backdrop-blur">
 								<CardHeader>
 									<CardTitle className="flex items-center gap-2">
 										<Settings className="h-5 w-5" />
@@ -116,21 +116,17 @@ export default function ProfilePage() {
 								<CardContent>
 									<div className="space-y-4">
 										<div>
-											<label className="text-sm font-medium">
-												Display Name
-											</label>
+											<label className="text-sm font-medium">Display Name</label>
 											<input
 												type="text"
 												title="Display Name"
 												placeholder="Enter Display Name"
-												className="w-full mt-1 px-3 py-2 border rounded-md"
+												className="w-full mt-1 px-3 py-2 border rounded-md border-deepblue-700 bg-deepblue-800 text-deepblue-50 placeholder:text-deepblue-200"
 												defaultValue="John.atom"
 											/>
 										</div>
 										<div>
-											<label className="text-sm font-medium">
-												Email Notifications
-											</label>
+											<label className="text-sm font-medium">Email Notifications</label>
 											<div className="mt-2 space-y-2">
 												<label className="flex items-center gap-2">
 													<input type="checkbox" defaultChecked />

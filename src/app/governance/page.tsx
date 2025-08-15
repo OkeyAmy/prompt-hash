@@ -11,35 +11,35 @@ import { Clock, Check, X } from "lucide-react"
 
 export default function GovernancePage() {
   return (
-    <div className="min-h-screen bg-gray-950 text-white flex flex-col bg-gradient-to-r from-purple-400 to-blue-500">
+    <div className="min-h-screen bg-deepblue-900 text-deepblue-50 flex flex-col">
       <Navigation />
       <main className="flex-1 container py-8">
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
             <h1 className="text-3xl font-bold mb-2">DAO Governance</h1>
-            <p className="text-muted-foreground">
+            <p className="text-deepblue-200">
               Participate in governance decisions and help shape the future of the marketplace.
             </p>
           </div>
 
           <Tabs defaultValue="proposals">
-            <TabsList className="grid w-full grid-cols-2">
+            <TabsList className="grid w-full grid-cols-2 bg-deepblue-800">
               <TabsTrigger value="proposals">Active Proposals</TabsTrigger>
               <TabsTrigger value="disputes">Dispute Resolution</TabsTrigger>
             </TabsList>
 
             <TabsContent value="proposals" className="mt-6">
               <div className="grid gap-6">
-                <Card>
+                <Card className="border-deepblue-700 bg-white/70 dark:bg-deepblue-800/60 backdrop-blur">
                   <CardHeader>
                     <div className="flex justify-between items-start">
                       <div>
                         <CardTitle>Reduce Marketplace Fees</CardTitle>
-                        <p className="text-sm text-muted-foreground mt-2">
+                        <p className="text-sm text-deepblue-300 mt-2">
                           Proposal to reduce marketplace fees from 2.5% to 2%.
                         </p>
                       </div>
-                      <Badge className="flex items-center gap-1">
+                      <Badge className="flex items-center gap-1 bg-primary text-white">
                         <Clock className="h-3 w-3" />2 days left
                       </Badge>
                     </div>
@@ -67,12 +67,12 @@ export default function GovernancePage() {
 
             <TabsContent value="disputes" className="mt-6">
               <div className="grid gap-6">
-                <Card>
+                <Card className="border-deepblue-700 bg-white/70 dark:bg-deepblue-800/60 backdrop-blur">
                   <CardHeader>
                     <div className="flex justify-between items-start">
                       <div>
                         <CardTitle>Dispute #123</CardTitle>
-                        <p className="text-sm text-muted-foreground mt-2">
+                        <p className="text-sm text-deepblue-300 mt-2">
                           Buyer claims the prompt quality doesn't match the description.
                         </p>
                       </div>

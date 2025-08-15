@@ -167,7 +167,7 @@ export function ChatInterface() {
   }
 
   return (
-    <div className="flex w-full h-screen bg-gradient-to-r from-purple-400 to-blue-500 overflow-hidden">
+    <div className="flex w-full h-[calc(100vh-4rem)] bg-deepblue-900">
       {/* Sidebar */}
       <Sidebar
         isOpen={isMobileMenuOpen}

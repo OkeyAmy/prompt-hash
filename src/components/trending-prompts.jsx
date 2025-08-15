@@ -74,7 +74,7 @@ function PromptModal({ prompt, onClose }) {
 		>
 			<div
 				onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
-				className="bg-gray-800 text-white rounded-lg shadow-lg max-w-md mx-4 p-6 relative"
+				className="bg-deepblue-900 text-deepblue-50 rounded-lg shadow-lg max-w-md mx-4 p-6 relative border border-deepblue-700"
 			>
 				<h2 className="text-2xl font-bold mb-4">{prompt.title}</h2>
 				<img
@@ -82,10 +82,10 @@ function PromptModal({ prompt, onClose }) {
 					alt={prompt.title}
 					className="w-full h-auto object-cover rounded mb-4"
 				/>
-				<p className="mb-4">{prompt.description}</p>
+				<p className="mb-4 text-deepblue-200">{prompt.description}</p>
 				<div className="flex items-center justify-between">
 					<span className="font-bold">{prompt.price}</span>
-					<Button variant="outline font-bold text-purple-500" onClick={onClose}>
+					<Button variant="outline" className="text-primary" onClick={onClose}>
 						<X className="h-4 w-4 mr-2" />
 						Close
 					</Button>
@@ -117,7 +117,7 @@ export function TrendingPrompts() {
 						{trendingPrompts.map((prompt) => (
 							<Card
 								key={prompt.id}
-								className="bg-gray-900 border-gray-800 overflow-hidden group hover:border-purple-500 transition-all"
+								className="bg-deepblue-900 border-deepblue-700 overflow-hidden group hover:border-primary transition-all"
 							>
 								<div className="aspect-[3/2] relative overflow-hidden">
 									<img
@@ -125,7 +125,7 @@ export function TrendingPrompts() {
 										alt={prompt.title}
 										className="object-cover w-full h-full transition-transform group-hover:scale-105"
 									/>
-									<Badge className="absolute top-2 right-2 bg-black/60 text-white">
+									<Badge className="absolute top-2 right-2 bg-primary text-white">
 										{prompt.category}
 									</Badge>
 								</div>
@@ -145,7 +145,7 @@ export function TrendingPrompts() {
 									<Button
 										size="sm"
 										variant="ghost"
-										className="text-purple-400 hover:text-blue-300 hover:bg-transparent p-0 flex items-center gap-1"
+										className="text-primary hover:text-deepblue-200 hover:bg-transparent p-0 flex items-center gap-1"
 										onClick={() => openModal(prompt)}
 									>
 										<EyeIcon className="h-4 w-4" />

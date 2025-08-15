@@ -13,7 +13,7 @@ import PricingSection from "@/components/pricing-section";
 import FaqSection from "@/components/faq-section";
 export default function Home() {
 	return (
-		<div className="min-h-screen flex flex-col bg-gray-950 text-white">
+		<div className="min-h-screen flex flex-col bg-deepblue-900 text-deepblue-50">
 			{/* Ambient background with moving particles */}
 			<div className="h-full w-full absolute inset-0 z-0">
 				<SparklesCore
@@ -23,7 +23,7 @@ export default function Home() {
 					maxSize={1.4}
 					particleDensity={100}
 					className="w-full h-full"
-					particleColor="#FFFFFF"
+					particleColor="#ffffff"
 				/>
 			</div>
 			<Navigation />

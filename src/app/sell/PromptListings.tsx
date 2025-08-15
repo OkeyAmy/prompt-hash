@@ -129,7 +129,6 @@ export function PromptListings() {
         functionName: "listPromptForSale",
         args: [prompt.promptTokenId, priceInWei],
       });
-
     } catch (error: any) {
       console.error("Error listing prompt:", error);
       alert(`Failed to initiate transaction: ${error.message}`);
@@ -153,14 +152,14 @@ export function PromptListings() {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center p-8">
-        <Loader2 className="h-8 w-8 animate-spin text-purple-500" />
+        <Loader2 className="h-8 w-8 animate-spin text-deepblue-400" />
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="p-4 text-center text-red-500 bg-red-50 rounded-lg">
+      <div className="p-4 text-center text-red-600 bg-red-50 rounded-lg">
         {error}
       </div>
     );
@@ -168,7 +167,7 @@ export function PromptListings() {
 
   if (prompts.length === 0) {
     return (
-      <div className="text-center p-8 text-gray-500">
+      <div className="text-center p-8 text-deepblue-200">
         No prompts found. Start by creating a new prompt!
       </div>
     );
@@ -177,7 +176,7 @@ export function PromptListings() {
   return (
     <div className="grid gap-6">
       {prompts.map((prompt) => (
-        <Card key={prompt._id}>
+        <Card key={prompt._id} className="border-deepblue-700 bg-white/70 dark:bg-deepblue-800/60 backdrop-blur">
           <CardContent className="p-6">
             <div className="flex flex-col md:flex-row gap-4">
               <div className="w-full md:w-1/4">
@@ -189,30 +188,30 @@ export function PromptListings() {
               </div>
               <div className="flex-1">
                 <div className="flex items-start justify-between">
-                  <h3 className="text-xl font-semibold">{prompt.title}</h3>
+                  <h3 className="text-xl font-semibold text-deepblue-900 dark:text-white">{prompt.title}</h3>
                   <div className="flex gap-2">
-                    <Badge className="bg-purple-500">
+                    <Badge className="bg-primary text-white">
                       Rating: {prompt.rating}/5
                     </Badge>
-                    <Badge className="bg-blue-500">
+                    <Badge className="bg-deepblue-700 text-white">
                       Token ID: {prompt.promptTokenId || 0}
                     </Badge>
                   </div>
                 </div>
-                <p className="text-sm text-muted-foreground mt-2 mb-4">
+                <p className="text-sm text-deepblue-700 dark:text-deepblue-100 mt-2 mb-4">
                   {prompt.content}
                 </p>
                 <div className="flex flex-wrap gap-4 text-sm">
                   <div>
-                    <span className="text-muted-foreground">Category: </span>
+                    <span className="text-deepblue-500">Category: </span>
                     <span className="font-medium">{prompt.category}</span>
                   </div>
                   <div>
-                    <span className="text-muted-foreground">Price: </span>
+                    <span className="text-deepblue-500">Price: </span>
                     <span className="font-medium">{prompt.price} AVAX</span>
                   </div>
                   <div>
-                    <span className="text-muted-foreground">Created: </span>
+                    <span className="text-deepblue-500">Created: </span>
                     <span className="font-medium">
                       {new Date(prompt.createdAt).toLocaleDateString()}
                     </span>
@@ -221,13 +220,13 @@ export function PromptListings() {
 
                 {/* Transaction Status */}
                 {sellingPromptId === prompt.promptTokenId && (
-                  <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                    <p className="text-sm text-blue-800">
+                  <div className="mt-4 p-3 bg-deepblue-50 border border-deepblue-200 rounded-lg">
+                    <p className="text-sm text-deepblue-800">
                       {isContractPending && "Waiting for wallet confirmation..."}
                       {isConfirming && "Confirming transaction on blockchain..."}
                     </p>
                     {hash && (
-                      <p className="text-xs text-blue-600 mt-1">
+                      <p className="text-xs text-deepblue-700 mt-1">
                         Transaction Hash: {hash}
                       </p>
                     )}
@@ -240,7 +239,7 @@ export function PromptListings() {
                   Edit
                 </Button>
                 <Button
-                  variant="secondary"
+                  variant="default"
                   size="sm"
                   onClick={() => listPromptForSale(prompt)}
                   disabled={isButtonDisabled(prompt.promptTokenId)}
@@ -250,9 +249,6 @@ export function PromptListings() {
                   )}
                   {getButtonText(prompt.promptTokenId)}
                 </Button>
-                {/* <Button variant="destructive" size="sm">
-                  Remove
-                </Button> */}
               </div>
             </div>
           </CardContent>

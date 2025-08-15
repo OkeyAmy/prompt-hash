@@ -35,7 +35,7 @@ export default function FaqSection() {
 	];
 
 	return (
-		<section className="py-16 bg-gray-950">
+		<section className="py-16 bg-deepblue-900">
 			<div className="container">
 				<h2 className="text-2xl font-bold text-center mb-12">
 					Frequently Asked Questions

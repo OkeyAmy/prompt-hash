@@ -61,7 +61,7 @@ export function FeaturedPrompts() {
 						<Link href="/browse" passHref>
 							<Button
 								variant="outline"
-								className="border-gray-700 text-purple-500"
+								className="border-deepblue-700 text-deepblue-100 hover:text-white"
 							>
 								View all
 							</Button>
@@ -72,7 +72,7 @@ export function FeaturedPrompts() {
 							<Card
 								key={prompt.id}
 								onClick={() => handleCardClick(prompt)}
-								className="bg-gray-800 border-gray-700 overflow-hidden group hover:border-purple-500 transition-all cursor-pointer"
+								className="bg-deepblue-900 border-deepblue-700 overflow-hidden group hover:border-primary transition-all cursor-pointer"
 							>
 								<div className="aspect-video relative overflow-hidden">
 									<img
@@ -80,7 +80,7 @@ export function FeaturedPrompts() {
 										alt={prompt.title}
 										className="object-cover w-full h-full transition-transform group-hover:scale-105"
 									/>
-									<Badge className="absolute top-2 right-2 bg-black/60 text-white">
+									<Badge className="absolute top-2 right-2 bg-primary text-white">
 										{prompt.category}
 									</Badge>
 								</div>
@@ -88,7 +88,7 @@ export function FeaturedPrompts() {
 									<h3 className="text-lg font-semibold text-white">
 										{prompt.title}
 									</h3>
-									<p className="mt-2 text-sm text-gray-300 line-clamp-2">
+									<p className="mt-2 text-sm text-deepblue-200 line-clamp-2">
 										{prompt.description}
 									</p>
 									<div className="flex items-center gap-1 text-yellow-500 mt-3">
@@ -100,7 +100,7 @@ export function FeaturedPrompts() {
 									<span className="text-lg font-bold text-white">
 										{prompt.price}
 									</span>
-									<Button className="bg-purple-600 hover:bg-purple-700 flex items-center gap-2">
+									<Button className="bg-primary hover:bg-deepblue-700 flex items-center gap-2">
 										<ShoppingCart className="h-4 w-4" />
 										Buy Now
 									</Button>
@@ -118,20 +118,20 @@ export function FeaturedPrompts() {
 					onClick={closeModal}
 				>
 					<div
-						className="bg-gray-900 p-6 rounded shadow-lg max-w-sm w-full"
+						className="bg-deepblue-900 p-6 rounded shadow-lg max-w-sm w-full border border-deepblue-700"
 						onClick={(e) => e.stopPropagation()}
 					>
 						{selectedPrompt.image && (
 							<img
 								src={selectedPrompt.image}
 								alt={selectedPrompt.title}
-								className="mb-4 w-full h-auto rounded text-gray-200"
+								className="mb-4 w-full h-auto rounded text-deepblue-200"
 							/>
 						)}
-						<h3 className="text-xl font-bold text-gray-200 mb-2">
+						<h3 className="text-xl font-bold text-deepblue-50 mb-2">
 							{selectedPrompt.title}
 						</h3>
-						<p className="mb-4 text-gray-400">{selectedPrompt.description}</p>
+						<p className="mb-4 text-deepblue-200">{selectedPrompt.description}</p>
 						<Button onClick={closeModal}>Close</Button>
 					</div>
 				</div>

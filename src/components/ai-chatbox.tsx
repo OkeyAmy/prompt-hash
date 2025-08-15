@@ -184,24 +184,24 @@ export function AiChatButton() {
       {/* Chat Button */}
       <Button
         onClick={toggleChat}
-        className="fixed animate-bounce bottom-6 right-6 rounded-full w-20 h-20 p-0 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 shadow-lg z-50 transition-transform hover:scale-110 hidden md:flex"
+        className="fixed bottom-6 right-6 rounded-full w-14 h-14 p-0 bg-primary hover:bg-deepblue-700 shadow-lg z-50 transition-transform hover:scale-110 hidden md:flex"
         aria-label="Open chat"
       >
-        <Bot size={40} className="text-white" />
+        <Bot size={28} className="text-white" />
       </Button>
 
       {/* Chat Modal */}
       {isOpen && (
         <div
           ref={chatRef}
-          className="fixed bottom-[calc(5rem+1.2rem)] right-2 md:right-6 bg-white dark:bg-gray-900 p-3 md:p-6 rounded-xl border border-border w-[calc(100vw-1rem)] max-w-[520px] md:w-[520px] h-[calc(100vh-8rem)] max-h-[550px] md:h-[550px] shadow-xl z-50 flex flex-col bg-gradient-to-r from-purple-400/20 to-blue-400/20 backdrop-blur-sm text-black"
+          className="fixed bottom-[calc(4rem+1rem)] right-2 md:right-6 bg-white dark:bg-deepblue-900 p-3 md:p-6 rounded-xl border border-deepblue-700 w-[calc(100vw-1rem)] max-w-[520px] md:w-[520px] h-[calc(100vh-8rem)] max-h-[550px] md:h-[550px] shadow-xl z-50 flex flex-col backdrop-blur-sm text-black dark:text-deepblue-50"
         >
           {/* Header */}
-          <div className="flex flex-col space-y-2 pb-4 border-b border-gray-200 dark:border-gray-700">
+          <div className="flex flex-col space-y-2 pb-4 border-b border-deepblue-700/60">
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-2">
-                <Bot size={24} className="text-blue-600 dark:text-blue-400" />
-                <h2 className="font-bold text-xl tracking-tight bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                <Bot size={24} className="text-primary" />
+                <h2 className="font-bold text-xl tracking-tight text-primary">
                   Prompt Hub AI
                 </h2>
               </div>
@@ -209,13 +209,13 @@ export function AiChatButton() {
                 title="Select AI model"
                 value={selectedModel}
                 onChange={(e) => setSelectedModel(e.target.value as AIModel)}
-                className="text-sm border rounded-md py-1 px-2 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="text-sm border rounded-md py-1 px-2 bg-white dark:bg-deepblue-800 border-deepblue-700 focus:ring-2 focus:ring-primary focus:border-primary"
               >
                 <option value="deepseek-r1:70b">deepseek-r1:70b</option>
                 <option value="llama3.2-vision">llama3.2-vision</option>
               </select>
             </div>
-            <p className="text-sm text-gray-600 dark:text-gray-300">
+            <p className="text-sm text-deepblue-600 dark:text-deepblue-300">
               Ask me anything about prompts and the marketplace
             </p>
           </div>
@@ -225,22 +225,22 @@ export function AiChatButton() {
             {messages.map((message, index) => (
               <div
                 key={index}
-                className={`flex gap-3 my-4 text-sm ${message.role === "ai" ? "bg-blue-50 dark:bg-blue-950/30 p-3 rounded-lg" : "bg-purple-50 dark:bg-purple-950/30 p-3 rounded-lg"}`}
+                className={`flex gap-3 my-4 text-sm ${message.role === "ai" ? "bg-deepblue-50 dark:bg-deepblue-800/40 p-3 rounded-lg" : "bg-deepblue-100/70 dark:bg-deepblue-700/40 p-3 rounded-lg"}`}
               >
                 <span className="relative flex shrink-0 overflow-hidden rounded-full w-10 h-10">
                   <div
-                    className={`rounded-full p-2 ${message.role === "ai" ? "bg-blue-100 dark:bg-blue-900" : "bg-purple-100 dark:bg-purple-900"}`}
+                    className={`rounded-full p-2 ${message.role === "ai" ? "bg-deepblue-100 dark:bg-deepblue-800" : "bg-deepblue-200 dark:bg-deepblue-700"}`}
                   >
                     {message.role === "ai" ? (
-                      <Sparkles className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                      <Sparkles className="h-6 w-6 text-primary" />
                     ) : (
-                      <User className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+                      <User className="h-6 w-6 text-primary" />
                     )}
                   </div>
                 </span>
                 <div className="leading-relaxed flex-1">
                   <span
-                    className={`block font-bold mb-1 ${message.role === "ai" ? "text-blue-700 dark:text-blue-300" : "text-purple-700 dark:text-purple-300"}`}
+                    className={`block font-bold mb-1 ${message.role === "ai" ? "text-deepblue-800 dark:text-deepblue-200" : "text-deepblue-900 dark:text-deepblue-100"}`}
                   >
                     {message.role === "ai" ? "AI" : "You"}
                   </span>
@@ -258,7 +258,7 @@ export function AiChatButton() {
                     variant="ghost"
                     size="icon"
                     onClick={() => handleCopy(message.content)}
-                    className="text-purple-500 hover:text-purple-700 hover:bg-purple-100 dark:hover:bg-purple-900/50"
+                    className="text-primary hover:text-deepblue-700 hover:bg-deepblue-50 dark:hover:bg-deepblue-800"
                   >
                     <Copy className="h-4 w-4" />
                   </Button>
@@ -266,17 +266,17 @@ export function AiChatButton() {
               </div>
             ))}
             {isLoading && (
-              <div className="flex gap-3 my-4 text-sm bg-blue-50 dark:bg-blue-950/30 p-3 rounded-lg animate-pulse">
+              <div className="flex gap-3 my-4 text-sm bg-deepblue-50 dark:bg-deepblue-800/40 p-3 rounded-lg animate-pulse">
                 <span className="relative flex shrink-0 overflow-hidden rounded-full w-10 h-10">
-                  <div className="rounded-full bg-blue-100 dark:bg-blue-900 p-2">
-                    <Sparkles className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                  <div className="rounded-full bg-deepblue-100 dark:bg-deepblue-800 p-2">
+                    <Sparkles className="h-6 w-6 text-primary" />
                   </div>
                 </span>
                 <div className="leading-relaxed flex-1">
-                  <span className="block font-bold mb-1 text-blue-700 dark:text-blue-300">AI</span>
+                  <span className="block font-bold mb-1 text-deepblue-800 dark:text-deepblue-200">AI</span>
                   <div className="flex items-center">
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin text-blue-600 dark:text-blue-400" />
-                    <span className="text-blue-600 dark:text-blue-400">Thinking...</span>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin text-primary" />
+                    <span className="text-primary">Thinking...</span>
                   </div>
                 </div>
               </div>
@@ -285,11 +285,11 @@ export function AiChatButton() {
           </div>
 
           {/* Input Box */}
-          <div className="pt-4 border-t border-gray-200 dark:border-gray-700 mt-auto">
+          <div className="pt-4 border-t border-deepblue-700/60 mt-auto">
             <form onSubmit={handleSubmit} className="flex flex-col space-y-3">
               <div className="flex items-center space-x-2">
                 <Input
-                  className="flex-1 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-md"
+                  className="flex-1 bg-white dark:bg-deepblue-800 border-deepblue-700 focus:ring-2 focus:ring-primary focus:border-primary rounded-md text-deepblue-900 dark:text-deepblue-50 placeholder:text-deepblue-400"
                   placeholder="Type your message..."
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
@@ -302,19 +302,19 @@ export function AiChatButton() {
                   onClick={handleImprovePrompt}
                   disabled={isLoading || isImproving || !inputValue.trim()}
                   title="Improve prompt"
-                  className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 hover:bg-purple-50 dark:hover:bg-purple-900/30"
+                  className="bg-white dark:bg-deepblue-800 border-deepblue-700 hover:bg-deepblue-50 dark:hover:bg-deepblue-700/60"
                 >
                   {isImproving ? (
-                    <Loader2 className="h-5 w-5 animate-spin text-purple-600" />
+                    <Loader2 className="h-5 w-5 animate-spin text-primary" />
                   ) : (
-                    <Wand2 className="h-5 w-5 text-purple-600" />
+                    <Wand2 className="h-5 w-5 text-primary" />
                   )}
                 </Button>
               </div>
               <Button
                 type="submit"
                 disabled={isLoading || !inputValue.trim()}
-                className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white py-2 rounded-md transition-all"
+                className="w-full bg-primary hover:bg-deepblue-700 text-white py-2 rounded-md transition-all"
               >
                 <Send className="h-5 w-5 mr-2" />
                 Send

@@ -31,7 +31,7 @@ export default function MarqueeSection() {
             <Badge
               key={`row1-${index}`}
               variant="outline"
-              className="border-purple-500/30 bg-black/50 backdrop-blur-sm text-white px-4 py-1.5 flex items-center gap-2 whitespace-nowrap mx-2"
+              className="border-deepblue-700/50 bg-deepblue-900/60 backdrop-blur-sm text-deepblue-50 px-4 py-1.5 flex items-center gap-2 whitespace-nowrap mx-2"
             >
               {item.icon}
               {item.text}
@@ -45,7 +45,7 @@ export default function MarqueeSection() {
             <Badge
               key={`row2-${index}`}
               variant="outline"
-              className="border-purple-500/30 bg-black/50 backdrop-blur-sm text-white px-4 py-1.5 flex items-center gap-2 whitespace-nowrap mx-2"
+              className="border-deepblue-700/50 bg-deepblue-900/60 backdrop-blur-sm text-deepblue-50 px-4 py-1.5 flex items-center gap-2 whitespace-nowrap mx-2"
             >
               {item.icon}
               {item.text}

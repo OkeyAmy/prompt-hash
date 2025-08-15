@@ -15,10 +15,10 @@ export function Hero() {
       <div className="absolute inset-0" />
       <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-500">
+          <h1 className="text-4xl font-bold tracking-tight sm:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-deepblue-400 to-deepblue-200">
             AI Prompt Marketplace
           </h1>
-          <p className="mt-6 text-lg leading-8 text-gray-300">
+          <p className="mt-6 text-lg leading-8 text-deepblue-200">
             Explore the best prompts from top creators. Generate images, text &
             code with ease.
           </p>
@@ -26,7 +26,7 @@ export function Hero() {
             <Link href="/browse">
               <Button
                 size="lg"
-                className="rounded-full bg-purple-600 hover:bg-purple-700"
+                className="rounded-full bg-primary hover:bg-deepblue-700"
               >
                 <span className="flex items-center gap-2">
                   <span>Explore Prompts</span>
@@ -39,11 +39,11 @@ export function Hero() {
                 {[1, 2, 3, 4, 5].map((i) => (
                   <div
                     key={i}
-                    className="inline-block h-6 w-6 rounded-full bg-gray-700 ring-2 ring-gray-900"
+                    className="inline-block h-6 w-6 rounded-full bg-deepblue-700 ring-2 ring-deepblue-900"
                   />
                 ))}
               </div>
-              <div className="text-sm text-gray-400">
+              <div className="text-sm text-deepblue-300">
                 <span className="font-semibold text-white">4.9★</span> (3.7k+
                 reviews)
               </div>

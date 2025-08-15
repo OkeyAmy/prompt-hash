@@ -54,8 +54,8 @@ export default function StatsCounter() {
 			<div className="container">
 				<div className="grid grid-cols-2 md:grid-cols-4 gap-6">
 					<div className="flex flex-col items-center text-center">
-						<div className="size-12 rounded-full bg-purple-900/30 flex items-center justify-center mb-4">
-							<Users className="size-6 text-purple-400" />
+						<div className="size-12 rounded-full bg-deepblue-800/40 flex items-center justify-center mb-4">
+							<Users className="size-6 text-deepblue-200" />
 						</div>
 						<div className="text-2xl md:text-3xl font-bold mb-1">
 							{counts.users.toLocaleString()}+

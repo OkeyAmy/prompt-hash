@@ -211,7 +211,7 @@ export default function BrowsePage() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-950 bg-gradient-to-r from-purple-400 to-blue-500 flex flex-col">
+    <div className="min-h-screen bg-deepblue-900 text-deepblue-50 flex flex-col">
       <Navigation />
       <main className="flex-1 container py-8">
         <div className="flex flex-col md:flex-row gap-8">
@@ -228,10 +228,10 @@ export default function BrowsePage() {
                   value={selectedCategory}
                   onValueChange={setSelectedCategory}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-deepblue-800 border-deepblue-700 text-deepblue-50">
                     <SelectValue placeholder="All Categories" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-deepblue-900 text-deepblue-50 border-deepblue-700">
                     <SelectItem value="all">All Categories</SelectItem>
                     <SelectItem value="Creative Writing">Creative Writing</SelectItem>
                     <SelectItem value="Programming">Programming</SelectItem>
@@ -250,7 +250,7 @@ export default function BrowsePage() {
                   max={100}
                   step={1}
                 />
-                <div className="flex justify-between text-sm text-muted-foreground">
+                <div className="flex justify-between text-sm text-deepblue-200">
                   <span>{priceRange[0]} AVAX</span>
                   <span>{priceRange[1]} AVAX</span>
                 </div>
@@ -258,10 +258,10 @@ export default function BrowsePage() {
               <div className="space-y-2">
                 <label className="text-sm font-medium">Sort By</label>
                 <Select defaultValue="recent">
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-deepblue-800 border-deepblue-700 text-deepblue-50">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-deepblue-900 text-deepblue-50 border-deepblue-700">
                     <SelectItem value="recent">Most Recent</SelectItem>
                     <SelectItem value="popular">Most Popular</SelectItem>
                     <SelectItem value="price-low">
@@ -281,7 +281,7 @@ export default function BrowsePage() {
             <div className="flex items-center gap-4">
               <Input
                 placeholder="Search prompts..."
-                className="max-w-md"
+                className="max-w-md bg-deepblue-800 border-deepblue-700 text-deepblue-50 placeholder:text-deepblue-200"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -293,12 +293,12 @@ export default function BrowsePage() {
 
             {isLoading ? (
               <div className="flex justify-center items-center min-h-[400px]">
-                <Loader2 className="h-8 w-8 animate-spin text-purple-500" />
+                <Loader2 className="h-8 w-8 animate-spin text-deepblue-400" />
               </div>
             ) : error ? (
-              <div className="text-center text-red-500 p-4">{error}</div>
+              <div className="text-center text-red-600 p-4">{error}</div>
             ) : filteredPrompts.length === 0 ? (
-              <div className="text-center text-gray-500 p-4">
+              <div className="text-center text-deepblue-200 p-4">
                 No prompts found matching your criteria.
               </div>
             ) : (
@@ -306,7 +306,7 @@ export default function BrowsePage() {
                 {filteredPrompts.map((prompt) => (
                   <Card
                     key={prompt._id}
-                    className="group relative overflow-hidden transition-all hover:shadow-lg"
+                    className="group relative overflow-hidden transition-all hover:shadow-lg border-deepblue-700 bg-white/70 dark:bg-deepblue-800/60 backdrop-blur"
                   >
                     <div className="aspect-video relative overflow-hidden">
                       <img
@@ -314,18 +314,18 @@ export default function BrowsePage() {
                         alt={prompt.title}
                         className="object-cover w-full h-full transition-transform group-hover:scale-105"
                       />
-                      <Badge className="absolute top-2 right-2">
+                      <Badge className="absolute top-2 right-2 bg-primary text-white">
                         {prompt.category}
                       </Badge>
                       {address && prompt.owner.walletAddress.toLowerCase() === address.toLowerCase() && (
-                        <Badge className="absolute top-2 left-2 bg-green-500">
+                        <Badge className="absolute top-2 left-2 bg-deepblue-700 text-white">
                           Your Prompt
                         </Badge>
                       )}
                     </div>
                     <CardContent className="p-4">
-                      <h3 className="font-semibold">{prompt.title}</h3>
-                      <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
+                      <h3 className="font-semibold text-deepblue-900 dark:text-white">{prompt.title}</h3>
+                      <p className="text-sm text-deepblue-700 dark:text-deepblue-100 mt-1 line-clamp-2">
                         {prompt.content}
                       </p>
                       <div className="flex items-center gap-2 mt-2">
@@ -333,13 +333,13 @@ export default function BrowsePage() {
                           <StarIcon className="h-4 w-4 fill-current" />
                           <span className="text-sm">{prompt.rating}</span>
                         </div>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-deepblue-500">
                           Seller: {prompt.owner.username}
                         </p>
                       </div>
                     </CardContent>
                     <CardFooter className="p-4 pt-0 flex justify-between items-center">
-                      <span className="text-lg font-bold">
+                      <span className="text-lg font-bold text-deepblue-900 dark:text-deepblue-50">
                         {prompt.price} AVAX
                       </span>
                       <Button onClick={() => openModal(prompt)}>
@@ -357,13 +357,13 @@ export default function BrowsePage() {
         {/* Prompt Detail Modal */}
         {isModalOpen && selectedPrompt && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <div className="bg-background rounded-lg shadow-lg max-w-3xl w-full max-h-[90vh] overflow-auto">
+            <div className="bg-background rounded-lg shadow-lg max-w-3xl w-full max-h-[90vh] overflow-auto border border-deepblue-700">
               <div className="p-6">
                 <div className="flex justify-between items-start mb-4">
-                  <h2 className="text-2xl font-bold">{selectedPrompt.title}</h2>
+                  <h2 className="text-2xl font-bold text-deepblue-900 dark:text-white">{selectedPrompt.title}</h2>
                   <button
                     onClick={closeModal}
-                    className="text-muted-foreground hover:text-foreground"
+                    className="text-deepblue-400 hover:text-foreground"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -391,7 +391,7 @@ export default function BrowsePage() {
                 </div>
 
                 <div className="flex items-center justify-between mb-4">
-                  <Badge>{selectedPrompt.category}</Badge>
+                  <Badge className="bg-primary text-white">{selectedPrompt.category}</Badge>
                   <div className="flex items-center gap-1 text-yellow-500">
                     <StarIcon className="h-4 w-4 fill-current" />
                     <span>{selectedPrompt.rating}</span>
@@ -400,7 +400,7 @@ export default function BrowsePage() {
 
                 <div className="mb-4">
                   <h3 className="text-lg font-semibold mb-2">Description</h3>
-                  <p className="text-muted-foreground">
+                  <p className="text-deepblue-700 dark:text-deepblue-100">
                     {selectedPrompt.content}
                   </p>
                 </div>
@@ -417,13 +417,13 @@ export default function BrowsePage() {
 
                 {/* Transaction Status */}
                 {buyingPromptId === selectedPrompt.promptTokenId && (
-                  <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                    <p className="text-sm text-blue-800">
+                  <div className="mb-6 p-4 bg-deepblue-50 border border-deepblue-200 rounded-lg">
+                    <p className="text-sm text-deepblue-800">
                       {isContractPending && "Waiting for wallet confirmation..."}
                       {isConfirming && "Processing purchase on blockchain..."}
                     </p>
                     {hash && (
-                      <p className="text-xs text-blue-600 mt-1">
+                      <p className="text-xs text-deepblue-700 mt-1">
                         Transaction Hash: {hash}
                       </p>
                     )}
@@ -431,7 +431,7 @@ export default function BrowsePage() {
                 )}
 
                 <div className="flex justify-between items-center">
-                  <span className="text-2xl font-bold">
+                  <span className="text-2xl font-bold text-deepblue-900 dark:text-deepblue-50">
                     {selectedPrompt.price} AVAX
                   </span>
                   <Button
