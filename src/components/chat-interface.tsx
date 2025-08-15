@@ -176,7 +176,7 @@ export function ChatInterface() {
         onClose={() => setIsMobileMenuOpen(false)}
         onToggleMobileMenu={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         activeLabel={leftNavActive}
-        onSelect={(label) => setLeftNavActive(label as any)}
+        onSelect={(label) => setLeftNavActive(label === "Compare" ? "Compare" : "Tasks")}
       />
 
       {/* Main Chat Area */}
