@@ -170,7 +170,7 @@ const DisplayWallet = () => {
           <DropdownMenuTrigger asChild>
             <Button
               variant="outline"
-              className="ml-auto font-bold border-purple-900 text-purple-900 hover:text-purple-300 hover:border-purple-800"
+              className="ml-auto font-bold border-primary-900 text-primary-900 hover:text-foreground hover:border-primary-800"
             >
               <Wallet className="md:mr-2 h-4 w-4" />
               <span className="hidden lg:inline">{formatAddress(account)}</span>
@@ -178,7 +178,7 @@ const DisplayWallet = () => {
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56 bg-gray-900 text-white border-gray-800">
             <DropdownMenuLabel className="flex items-center">
-              <span className="md:hidden font-mono text-purple-400">
+              <span className="md:hidden font-mono text-primary-400">
                 {formatAddress(account)}
               </span>
             </DropdownMenuLabel>
@@ -210,7 +210,7 @@ const DisplayWallet = () => {
       ) : (
         <Button
           variant="outline"
-          className="ml-auto font-bold border-purple-900 text-purple-800 hover:text-purple-300 hover:border-purple-800"
+          className="ml-auto font-bold border-primary-900 text-primary-800 hover:text-foreground hover:border-primary-800"
           onClick={connect}
           disabled={isLoading}
         >

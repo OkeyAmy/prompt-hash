@@ -63,15 +63,13 @@ export default function PricingSection() {
 					].map((plan, index) => (
 						<div
 							key={index}
-							className={`rounded-lg border ${
-								plan.popular
-									? "border-purple-500 bg-purple-950/20"
-									: "border-gray-800 bg-gray-950"
-							} p-8 relative`}
+							className={`relative rounded-xl border p-6 transition-all ${plan.popular
+								? "border-primary bg-primary/5"
+								: "border-border"}`}
 						>
 							{plan.popular && (
-								<div className="absolute top-0 right-0 bg-purple-600 text-white text-xs font-medium px-3 py-1 rounded-bl-lg rounded-tr-lg">
-									Most Popular
+								<div className="absolute top-0 right-0 bg-primary text-primary-foreground text-xs font-medium px-3 py-1 rounded-bl-lg rounded-tr-lg">
+									Popular
 								</div>
 							)}
 
@@ -94,8 +92,8 @@ export default function PricingSection() {
 							<Button
 								className={
 									plan.popular
-										? "w-full bg-purple-600 hover:bg-purple-700"
-										: "w-full"
+										? "w-full bg-primary hover:bg-primary/90"
+										: "w-full bg-secondary hover:bg-secondary/80"
 								}
 								variant={plan.popular ? "default" : "outline"}
 							>

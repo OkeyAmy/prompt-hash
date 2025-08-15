@@ -75,33 +75,29 @@ export function ConversationDetails({
               <h3 className="font-medium text-sm">Quick actions</h3>
               <div className="space-y-2">
                 <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full justify-start transition-colors hover:bg-blue-50 hover:text-blue-600"
+                  variant="ghost"
+                  className="w-full justify-start transition-colors hover:bg-primary/10 hover:text-primary"
                 >
                   <CreditCard size={14} className="mr-2" />
                   Check account status
                 </Button>
                 <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full justify-start transition-colors hover:bg-blue-50 hover:text-blue-600"
+                  variant="ghost"
+                  className="w-full justify-start transition-colors hover:bg-primary/10 hover:text-primary"
                 >
                   <CreditCard size={14} className="mr-2" />
                   Process payment
                 </Button>
                 <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full justify-start transition-colors hover:bg-blue-50 hover:text-blue-600"
+                  variant="ghost"
+                  className="w-full justify-start transition-colors hover:bg-primary/10 hover:text-primary"
                 >
                   <User size={14} className="mr-2" />
                   Update customer info
                 </Button>
                 <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full justify-start transition-colors hover:bg-blue-50 hover:text-blue-600"
+                  variant="ghost"
+                  className="w-full justify-start transition-colors hover:bg-primary/10 hover:text-primary"
                 >
                   <Zap size={14} className="mr-2" />
                   Create support ticket
@@ -113,23 +109,20 @@ export function ConversationDetails({
               <h3 className="font-medium text-sm">Suggested responses</h3>
               <div className="space-y-2">
                 <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full justify-start text-left transition-colors hover:bg-blue-50 hover:text-blue-600"
+                  variant="ghost"
+                  className="w-full justify-start text-left transition-colors hover:bg-primary/10 hover:text-primary"
                 >
                   I'll check your account right away.
                 </Button>
                 <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full justify-start text-left transition-colors hover:bg-blue-50 hover:text-blue-600"
+                  variant="ghost"
+                  className="w-full justify-start text-left transition-colors hover:bg-primary/10 hover:text-primary"
                 >
                   Would you like to set up automatic payments?
                 </Button>
                 <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full justify-start text-left transition-colors hover:bg-blue-50 hover:text-blue-600"
+                  variant="ghost"
+                  className="w-full justify-start text-left transition-colors hover:bg-primary/10 hover:text-primary"
                 >
                   Is there anything else I can help with today?
                 </Button>
@@ -144,7 +137,7 @@ export function ConversationDetails({
               <h3 className="font-medium text-sm">Customer information</h3>
               <div className="space-y-3 text-sm">
                 <div className="flex items-center">
-                  <User size={14} className="mr-2 text-gray-500" />
+                  <User size={14} className="mr-2 text-primary" />
                   <span className="font-medium">Name:</span>
                   <span className="ml-2">{customerName}</span>
                 </div>
@@ -174,17 +167,17 @@ export function ConversationDetails({
             <div className="space-y-2">
               <h3 className="font-medium text-sm">Recent activity</h3>
               <div className="space-y-2 text-sm">
-                <div className="p-2 border border-gray-200 rounded-md hover:border-blue-300 transition-colors">
+                <div className="p-2 border border-gray-200 rounded-md hover:border-primary transition-colors">
                   <div className="flex items-center">
-                    <CreditCard size={14} className="mr-2 text-blue-600" />
-                    <p className="font-medium">Payment received</p>
+                    <CreditCard size={14} className="mr-2 text-primary" />
+                    <p className="font-medium">Payment processed</p>
                   </div>
                   <div className="flex items-center mt-1">
                     <Calendar size={14} className="mr-2 text-gray-500" />
                     <p className="text-gray-500 text-xs">July 15, 2024</p>
                   </div>
                 </div>
-                <div className="p-2 border border-gray-200 rounded-md hover:border-blue-300 transition-colors">
+                <div className="p-2 border border-gray-200 rounded-md hover:border-primary transition-colors">
                   <div className="flex items-center">
                     <Zap size={14} className="mr-2 text-orange-600" />
                     <p className="font-medium">Support ticket #45678</p>
@@ -194,9 +187,9 @@ export function ConversationDetails({
                     <p className="text-gray-500 text-xs">June 28, 2024</p>
                   </div>
                 </div>
-                <div className="p-2 border border-gray-200 rounded-md hover:border-blue-300 transition-colors">
+                <div className="p-2 border border-gray-200 rounded-md hover:border-primary transition-colors">
                   <div className="flex items-center">
-                    <User size={14} className="mr-2 text-purple-600" />
+                    <User size={14} className="mr-2 text-primary" />
                     <p className="font-medium">Account updated</p>
                   </div>
                   <div className="flex items-center mt-1">
@@ -223,7 +216,7 @@ export function ConversationDetails({
                     <input type="checkbox" className="sr-only peer" id="auto-translate" />
                     <label
                       htmlFor="auto-translate"
-                      className="absolute inset-0 rounded-full cursor-pointer peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:w-4 after:h-4 after:bg-white after:rounded-full after:transition-all peer-checked:after:translate-x-5"
+                      className="absolute inset-0 rounded-full cursor-pointer peer-checked:bg-primary after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:w-4 after:h-4 after:bg-white after:rounded-full after:transition-all peer-checked:after:translate-x-5"
                     ></label>
                   </div>
                 </div>
@@ -237,7 +230,7 @@ export function ConversationDetails({
                     <input type="checkbox" className="sr-only peer" id="save-history" defaultChecked />
                     <label
                       htmlFor="save-history"
-                      className="absolute inset-0 rounded-full cursor-pointer peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:w-4 after:h-4 after:bg-white after:rounded-full after:transition-all peer-checked:after:translate-x-5"
+                      className="absolute inset-0 rounded-full cursor-pointer peer-checked:bg-primary after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:w-4 after:h-4 after:bg-white after:rounded-full after:transition-all peer-checked:after:translate-x-5"
                     ></label>
                   </div>
                 </div>
@@ -251,7 +244,7 @@ export function ConversationDetails({
                     <input type="checkbox" className="sr-only peer" id="enable-voice" defaultChecked />
                     <label
                       htmlFor="enable-voice"
-                      className="absolute inset-0 rounded-full cursor-pointer peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:w-4 after:h-4 after:bg-white after:rounded-full after:transition-all peer-checked:after:translate-x-5"
+                      className="absolute inset-0 rounded-full cursor-pointer peer-checked:bg-primary after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:w-4 after:h-4 after:bg-white after:rounded-full after:transition-all peer-checked:after:translate-x-5"
                     ></label>
                   </div>
                 </div>
@@ -266,7 +259,7 @@ export function ConversationDetails({
                     <MessageSquare size={14} className="mr-2 text-gray-500" />
                     Response style
                   </label>
-                  <select className="w-full p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                  <select className="w-full p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-primary focus:border-primary">
                     <option>Professional</option>
                     <option>Friendly</option>
                     <option>Concise</option>
@@ -279,7 +272,7 @@ export function ConversationDetails({
                     <Database size={14} className="mr-2 text-gray-500" />
                     Knowledge base
                   </label>
-                  <select className="w-full p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                  <select className="w-full p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-primary focus:border-primary">
                     <option>Customer Support</option>
                     <option>Technical Support</option>
                     <option>Billing</option>

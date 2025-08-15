@@ -126,19 +126,18 @@ export function ChatArea({
   
 
 	return (
-		<div className="flex-1 flex flex-col h-full bg-gradient-to-r from-purple-400 to-blue-500 backdrop-blur-sm shadow-lg max-w-full">
+		<div className="flex-1 flex flex-col h-full bg-background backdrop-blur-sm shadow-lg max-w-full">
 			{/* Chat header */}
-			<div className="flex justify-between items-center p-2 sm:p-4 border-b border-gray-200 bg-white/80 backdrop-blur-sm">
-				<div className="flex items-center gap-2">
-					<MessageSquare size={18} className="text-blue-600" />
-					<span className="font-semibold">Chat Playground</span>
+			<div className="p-4 border-b border-border">
+				<div className="flex items-center justify-between">
+					<span className="font-semibold text-foreground">Chat Playground</span>
 				</div>
 				<div className="flex items-center gap-1 sm:gap-4">
 					<select
 						title="Select AI model"
 						value={selectedModel}
 						onChange={(e) => setSelectedModel(e.target.value as AIModel)}
-						className="text-xs sm:text-sm border rounded-md py-1 px-1 sm:px-2 bg-white border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+						className="text-xs sm:text-sm border rounded-md py-1 px-1 sm:px-2 bg-white border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary"
 					>
 						<option value="deepseek-r1:70b">deepseek-r1:70b</option>
 						<option value="llama3.2-vision">llama3.2-vision</option>
@@ -147,7 +146,7 @@ export function ChatArea({
 						variant="outline"
 						size="sm"
 						onClick={onSaveConversation}
-						className="transition-all hover:bg-blue-50 flex items-center gap-1 hidden sm:flex"
+						className="transition-all hover:bg-primary/10 flex items-center gap-1 hidden sm:flex"
 					>
 						<Save size={16} />
 						<span className="hidden sm:inline">Save conversation</span>
@@ -183,18 +182,18 @@ export function ChatArea({
 						<div className="flex items-center gap-2">
 							<div
 								className={`w-8 h-8 rounded-full flex items-center justify-center ${
-									message.sender === "agent" ? "bg-blue-100" : "bg-purple-100"
+									message.sender === "agent" ? "bg-primary/20" : "bg-secondary"
 								}`}
 							>
 								{message.sender === "agent" ? (
-									<Bot size={16} className="text-blue-600" />
+									<Bot size={16} className="text-primary" />
 								) : (
-									<div className="font-semibold text-sm text-purple-600">
+									<div className="font-semibold text-sm text-primary">
 										User
 									</div>
 								)}
 							</div>
-							<span className="font-semibold text-blue-600">
+							<span className="font-semibold text-primary">
 								{message.sender === "agent" ? "PromptHub agent" : "User"}
 							</span>
 							<span className="text-xs text-gray-500">{message.timestamp}</span>
@@ -245,7 +244,7 @@ export function ChatArea({
 										size={16}
 										className={
 											message.reactions.likes > 0
-												? "text-blue-600 fill-blue-600"
+												? "text-primary fill-primary"
 												: ""
 										}
 									/>
@@ -274,10 +273,10 @@ export function ChatArea({
 				{isTyping && (
 					<div className="space-y-1 animate-fadeIn">
 						<div className="flex items-center gap-2">
-							<div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
-								<Bot size={16} className="text-blue-600" />
+							<div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+								<Bot size={16} className="text-primary" />
 							</div>
-							<span className="font-semibold text-blue-600">
+							<span className="font-semibold text-primary">
 								PromptHub agent
 							</span>
 							<span className="text-xs text-gray-500">
@@ -288,13 +287,13 @@ export function ChatArea({
 							</span>
 						</div>
 						<div className="flex items-center gap-1 ml-10">
-							<div className="h-2 w-2 bg-blue-400 rounded-full animate-bounce"></div>
+							<div className="h-2 w-2 bg-primary rounded-full animate-bounce"></div>
 							<div
-								className="h-2 w-2 bg-blue-400 rounded-full animate-bounce"
+								className="h-2 w-2 bg-primary rounded-full animate-bounce"
 								style={{ animationDelay: "0.2s" }}
 							></div>
 							<div
-								className="h-2 w-2 bg-blue-400 rounded-full animate-bounce"
+								className="h-2 w-2 bg-primary rounded-full animate-bounce"
 								style={{ animationDelay: "0.4s" }}
 							></div>
 						</div>
@@ -309,7 +308,7 @@ export function ChatArea({
 				<form onSubmit={handleSubmit} className="flex flex-col gap-3">
 					<div className="flex items-center gap-2">
 						<Input
-							className="flex-1 border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
+							className="flex-1 border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary bg-white"
 							placeholder="Type a message..."
 							value={inputValue}
 							onChange={(e) => setInputValue(e.target.value)}
@@ -322,21 +321,21 @@ export function ChatArea({
 							onClick={handleImprovePrompt}
 							disabled={isTyping || isImproving || !inputValue.trim()}
 							title="Improve prompt"
-							className="bg-white border-gray-300 hover:bg-blue-50 transition-all"
+							className="bg-white border-gray-300 hover:bg-primary/10 transition-all"
 						>
 							{isImproving ? (
-								<Loader2 className="h-5 w-5 animate-spin text-blue-600" />
+								<Loader2 className="h-5 w-5 animate-spin text-primary" />
 							) : (
-								<Wand2 className="h-5 w-5 text-blue-600" />
+								<Wand2 className="h-5 w-5 text-primary" />
 							)}
 						</Button>
 					</div>
 					<Button
 						type="submit"
 						disabled={isTyping || !inputValue.trim()}
-						className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white transition-all flex items-center gap-2"
+						className="bg-primary hover:bg-primary/90 text-primary-foreground transition-all flex items-center gap-2 px-3 py-1 rounded"
 					>
-						<Send size={16} />
+						<Send size={14} />
 						Send
 					</Button>
 				</form>

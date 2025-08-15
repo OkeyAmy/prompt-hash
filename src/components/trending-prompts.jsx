@@ -74,7 +74,7 @@ function PromptModal({ prompt, onClose }) {
 		>
 			<div
 				onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
-				className="bg-gray-800 text-white rounded-lg shadow-lg max-w-md mx-4 p-6 relative"
+				className="bg-card text-foreground rounded-lg shadow-lg max-w-md mx-4 p-6 relative border border-border"
 			>
 				<h2 className="text-2xl font-bold mb-4">{prompt.title}</h2>
 				<img
@@ -85,7 +85,7 @@ function PromptModal({ prompt, onClose }) {
 				<p className="mb-4">{prompt.description}</p>
 				<div className="flex items-center justify-between">
 					<span className="font-bold">{prompt.price}</span>
-					<Button variant="outline font-bold text-purple-500" onClick={onClose}>
+					<Button variant="outline font-bold text-primary" onClick={onClose}>
 						<X className="h-4 w-4 mr-2" />
 						Close
 					</Button>
@@ -117,7 +117,7 @@ export function TrendingPrompts() {
 						{trendingPrompts.map((prompt) => (
 							<Card
 								key={prompt.id}
-								className="bg-gray-900 border-gray-800 overflow-hidden group hover:border-purple-500 transition-all"
+								className="bg-card border-border overflow-hidden group hover:border-primary transition-all"
 							>
 								<div className="aspect-[3/2] relative overflow-hidden">
 									<img
@@ -125,12 +125,12 @@ export function TrendingPrompts() {
 										alt={prompt.title}
 										className="object-cover w-full h-full transition-transform group-hover:scale-105"
 									/>
-									<Badge className="absolute top-2 right-2 bg-black/60 text-white">
+									<Badge className="absolute top-2 right-2 bg-black/60 text-primary-foreground">
 										{prompt.category}
 									</Badge>
 								</div>
 								<CardContent className="p-4">
-									<h3 className="font-medium text-white truncate">
+									<h3 className="font-medium truncate">
 										{prompt.title}
 									</h3>
 									<div className="flex items-center gap-1 text-yellow-500 mt-1">
@@ -139,13 +139,13 @@ export function TrendingPrompts() {
 									</div>
 								</CardContent>
 								<CardFooter className="p-4 pt-0 flex justify-between items-center">
-									<span className="text-sm font-bold text-white">
+									<span className="text-sm font-bold">
 										{prompt.price}
 									</span>
 									<Button
 										size="sm"
 										variant="ghost"
-										className="text-purple-400 hover:text-blue-300 hover:bg-transparent p-0 flex items-center gap-1"
+										className="text-primary hover:text-foreground hover:bg-primary/10 p-0 flex items-center gap-1"
 										onClick={() => openModal(prompt)}
 									>
 										<EyeIcon className="h-4 w-4" />

@@ -37,7 +37,7 @@ export function Sidebar({ isOpen, onClose, onToggleMobileMenu }: SidebarProps) {
       >
         <div className="p-4 border-b border-gray-200">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
               <Zap size={16} className="text-white" />
             </div>
             <h2 className="font-semibold text-lg">PromptHub Agent</h2>

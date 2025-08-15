@@ -55,13 +55,13 @@ export function FeaturedPrompts() {
 			<section className="py-16 px-6 bg-transparent">
 				<div className="mx-auto max-w-7xl">
 					<div className="flex justify-between items-center mb-8">
-						<h2 className="text-2xl font-bold tracking-tight text-white">
+						<h2 className="text-2xl font-bold tracking-tight text-foreground">
 							Featured Prompts
 						</h2>
 						<Link href="/browse" passHref>
 							<Button
 								variant="outline"
-								className="border-gray-700 text-purple-500"
+								className="border-border text-primary"
 							>
 								View all
 							</Button>
@@ -72,7 +72,7 @@ export function FeaturedPrompts() {
 							<Card
 								key={prompt.id}
 								onClick={() => handleCardClick(prompt)}
-								className="bg-gray-800 border-gray-700 overflow-hidden group hover:border-purple-500 transition-all cursor-pointer"
+								className="bg-card border-border overflow-hidden group hover:border-primary transition-all cursor-pointer"
 							>
 								<div className="aspect-video relative overflow-hidden">
 									<img
@@ -80,15 +80,15 @@ export function FeaturedPrompts() {
 										alt={prompt.title}
 										className="object-cover w-full h-full transition-transform group-hover:scale-105"
 									/>
-									<Badge className="absolute top-2 right-2 bg-black/60 text-white">
+									<Badge className="absolute top-2 right-2 bg-black/60 text-primary-foreground">
 										{prompt.category}
 									</Badge>
 								</div>
 								<CardContent className="p-4">
-									<h3 className="text-lg font-semibold text-white">
+									<h3 className="text-lg font-semibold text-foreground">
 										{prompt.title}
 									</h3>
-									<p className="mt-2 text-sm text-gray-300 line-clamp-2">
+									<p className="mt-2 text-sm text-muted-foreground line-clamp-2">
 										{prompt.description}
 									</p>
 									<div className="flex items-center gap-1 text-yellow-500 mt-3">
@@ -97,10 +97,10 @@ export function FeaturedPrompts() {
 									</div>
 								</CardContent>
 								<CardFooter className="p-4 pt-0 flex justify-between items-center">
-									<span className="text-lg font-bold text-white">
+									<span className="text-lg font-bold text-foreground">
 										{prompt.price}
 									</span>
-									<Button className="bg-purple-600 hover:bg-purple-700 flex items-center gap-2">
+									<Button className="bg-primary hover:bg-primary/90 text-primary-foreground flex items-center gap-2">
 										<ShoppingCart className="h-4 w-4" />
 										Buy Now
 									</Button>
@@ -118,7 +118,7 @@ export function FeaturedPrompts() {
 					onClick={closeModal}
 				>
 					<div
-						className="bg-gray-900 p-6 rounded shadow-lg max-w-sm w-full"
+						className="bg-card p-6 rounded shadow-lg max-w-sm w-full border border-border"
 						onClick={(e) => e.stopPropagation()}
 					>
 						{selectedPrompt.image && (
@@ -128,10 +128,10 @@ export function FeaturedPrompts() {
 								className="mb-4 w-full h-auto rounded text-gray-200"
 							/>
 						)}
-						<h3 className="text-xl font-bold text-gray-200 mb-2">
+						<h3 className="text-xl font-bold text-foreground mb-2">
 							{selectedPrompt.title}
 						</h3>
-						<p className="mb-4 text-gray-400">{selectedPrompt.description}</p>
+						<p className="mb-4 text-muted-foreground">{selectedPrompt.description}</p>
 						<Button onClick={closeModal}>Close</Button>
 					</div>
 				</div>

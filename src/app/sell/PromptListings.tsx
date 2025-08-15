@@ -153,7 +153,7 @@ export function PromptListings() {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center p-8">
-        <Loader2 className="h-8 w-8 animate-spin text-purple-500" />
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
       </div>
     );
   }
@@ -191,10 +191,10 @@ export function PromptListings() {
                 <div className="flex items-start justify-between">
                   <h3 className="text-xl font-semibold">{prompt.title}</h3>
                   <div className="flex gap-2">
-                    <Badge className="bg-purple-500">
+                    <Badge className="bg-primary text-primary-foreground">
                       Rating: {prompt.rating}/5
                     </Badge>
-                    <Badge className="bg-blue-500">
+                    <Badge className="bg-secondary">
                       Token ID: {prompt.promptTokenId || 0}
                     </Badge>
                   </div>
@@ -221,13 +221,13 @@ export function PromptListings() {
 
                 {/* Transaction Status */}
                 {sellingPromptId === prompt.promptTokenId && (
-                  <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                    <p className="text-sm text-blue-800">
+                  <div className="mt-4 p-3 bg-primary/10 border border-primary/30 rounded-lg">
+                    <p className="text-sm text-foreground">
                       {isContractPending && "Waiting for wallet confirmation..."}
                       {isConfirming && "Confirming transaction on blockchain..."}
                     </p>
                     {hash && (
-                      <p className="text-xs text-blue-600 mt-1">
+                      <p className="text-xs text-muted-foreground mt-1">
                         Transaction Hash: {hash}
                       </p>
                     )}

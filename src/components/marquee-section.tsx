@@ -28,28 +28,26 @@ export default function MarqueeSection() {
         {/* First marquee row - moves left to right */}
         <div className="flex whitespace-nowrap animate-marquee">
           {[...items1, ...items1].map((item, index) => (
-            <Badge
+            <span
               key={`row1-${index}`}
-              variant="outline"
-              className="border-purple-500/30 bg-black/50 backdrop-blur-sm text-white px-4 py-1.5 flex items-center gap-2 whitespace-nowrap mx-2"
+              className="border-primary/30 bg-black/50 backdrop-blur-sm text-white px-4 py-1.5 flex items-center gap-2 whitespace-nowrap mx-2"
             >
               {item.icon}
               {item.text}
-            </Badge>
+            </span>
           ))}
         </div>
 
         {/* Second marquee row - moves right to left */}
         <div className="flex whitespace-nowrap animate-marquee-reverse mt-3">
           {[...items2, ...items2].map((item, index) => (
-            <Badge
+            <span
               key={`row2-${index}`}
-              variant="outline"
-              className="border-purple-500/30 bg-black/50 backdrop-blur-sm text-white px-4 py-1.5 flex items-center gap-2 whitespace-nowrap mx-2"
+              className="border-primary/30 bg-black/50 backdrop-blur-sm text-white px-4 py-1.5 flex items-center gap-2 whitespace-nowrap mx-2"
             >
               {item.icon}
               {item.text}
-            </Badge>
+            </span>
           ))}
         </div>
       </div>

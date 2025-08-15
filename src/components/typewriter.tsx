@@ -58,7 +58,7 @@ export function Typewriter({
 		<div className={className}>
 			<ReactMarkdown>{displayedText}</ReactMarkdown>
 			{showCursor && !isComplete && (
-				<span className="inline-block w-2 h-4 bg-blue-500 ml-1 animate-pulse"></span>
+				<span className="inline-block w-2 h-4 bg-primary ml-1 animate-pulse"></span>
 			)}
 		</div>
 	);

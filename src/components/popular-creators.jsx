@@ -1,6 +1,7 @@
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import { Badge } from "./ui/badge";
+import Link from "next/link";
 
 const creators = [
 	{
@@ -41,22 +42,24 @@ export function PopularCreators() {
 					<h2 className="text-2xl font-bold tracking-tight text-white">
 						Popular Creators
 					</h2>
-					<Button variant="outline" className="border-gray-700 text-purple-500">
-						View all
-					</Button>
+					<Link href="/creators">
+						<Button variant="outline" className="border-border text-primary">
+							View all
+						</Button>
+					</Link>
 				</div>
 				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 					{creators.map((creator) => (
 						<Card
 							key={creator.id}
-							className="bg-gray-900 border-gray-800 hover:border-purple-500 transition-all"
+							className="bg-gray-900 border-gray-800 hover:border-primary transition-all p-4 rounded-lg"
 						>
 							<CardContent className="p-6">
 								<div className="flex items-center gap-4">
 									<img
-										src={creator.image || "/placeholder.svg"}
+										src={creator.image}
 										alt={creator.name}
-										className="w-16 h-16 rounded-full object-cover border-2 border-purple-500"
+										className="w-16 h-16 rounded-full object-cover border-2 border-primary"
 									/>
 									<div>
 										<h3 className="font-semibold text-white">{creator.name}</h3>
@@ -72,12 +75,9 @@ export function PopularCreators() {
 									>
 										{creator.followers} followers
 									</Badge>
-									<Button
-										variant="ghost"
-										className="text-purple-400 hover:text-purple-300"
-									>
+									<a href="#" className="text-primary hover:text-foreground">
 										Follow
-									</Button>
+									</a>
 								</div>
 							</CardContent>
 						</Card>

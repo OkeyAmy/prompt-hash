@@ -56,12 +56,11 @@ export function SellerCTA() {
             <h2 className="text-3xl font-bold tracking-tight text-white mb-4">
               Sell your prompts on PromptHub
             </h2>
-            <p className="text-lg text-gray-300 mb-6">
+            <p className="mt-2 text-muted-foreground">
               Join thousands of creators who earn by selling their AI prompts. Turn your expertise into income.
             </p>
             <Link href="/sell">
-              <Button size="lg" className="bg-purple-600 hover:bg-purple-700 flex items-center">
-                <Rocket className="mr-2 h-5 w-5" />
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground flex items-center">
                 Start Selling
               </Button>
             </Link>

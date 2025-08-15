@@ -211,14 +211,14 @@ export default function BrowsePage() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-950 bg-gradient-to-r from-purple-400 to-blue-500 flex flex-col">
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
       <Navigation />
       <main className="flex-1 container py-8">
         <div className="flex flex-col md:flex-row gap-8">
           {/* Filters Sidebar */}
           <aside className="w-full md:w-64 space-y-6">
             <div className="space-y-4">
-              <h2 className="text-lg font-semibold flex items-center gap-2">
+              <h2 className="text-lg font-semibold flex items-center gap-2 text-foreground">
                 <Filter className="h-5 w-5" />
                 Filters
               </h2>
@@ -264,12 +264,8 @@ export default function BrowsePage() {
                   <SelectContent>
                     <SelectItem value="recent">Most Recent</SelectItem>
                     <SelectItem value="popular">Most Popular</SelectItem>
-                    <SelectItem value="price-low">
-                      Price: Low to High
-                    </SelectItem>
-                    <SelectItem value="price-high">
-                      Price: High to Low
-                    </SelectItem>
+                    <SelectItem value="price-low">Price: Low to High</SelectItem>
+                    <SelectItem value="price-high">Price: High to Low</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -293,12 +289,12 @@ export default function BrowsePage() {
 
             {isLoading ? (
               <div className="flex justify-center items-center min-h-[400px]">
-                <Loader2 className="h-8 w-8 animate-spin text-purple-500" />
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
               </div>
             ) : error ? (
               <div className="text-center text-red-500 p-4">{error}</div>
             ) : filteredPrompts.length === 0 ? (
-              <div className="text-center text-gray-500 p-4">
+              <div className="text-center text-muted-foreground p-4">
                 No prompts found matching your criteria.
               </div>
             ) : (

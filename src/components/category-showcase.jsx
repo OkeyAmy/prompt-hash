@@ -25,9 +25,9 @@ const categories = [
 
 export function CategoryShowcase() {
 	return (
-		<section className="py-16 px-6 bg-gray-950">
+		<section className="py-16 px-6 bg-background">
 			<div className="mx-auto max-w-7xl">
-				<h2 className="text-2xl font-bold tracking-tight text-white mb-8">
+				<h2 className="text-2xl font-bold tracking-tight text-foreground mb-8">
 					Explore the App Store
 				</h2>
 				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -42,10 +42,10 @@ export function CategoryShowcase() {
 									/>
 								</div>
 								<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-4">
-									<h3 className="text-lg font-semibold text-white">
+									<h3 className="text-lg font-semibold text-primary-foreground">
 										{category.name}
 									</h3>
-									<p className="text-sm text-gray-300">
+									<p className="text-sm text-primary-foreground/80">
 										{category.count} prompts
 									</p>
 								</div>
@@ -55,7 +55,7 @@ export function CategoryShowcase() {
 				</div>
 				<div className="mt-8 text-center">
 					<Link href="/browse">
-						<Button className="bg-purple-600 hover:bg-purple-700">
+						<Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
 							View All Categories
 						</Button>
 					</Link>
