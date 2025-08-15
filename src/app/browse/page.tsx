@@ -1,7 +1,6 @@
 "use client";
 
 import { Navigation } from "@/components/navigation";
-import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
@@ -211,12 +210,12 @@ export default function BrowsePage() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-950 bg-gradient-to-r from-purple-400 to-blue-500 flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gray-950 text-foreground">
       <Navigation />
-      <main className="flex-1 container py-8">
-        <div className="flex flex-col md:flex-row gap-8">
+      <main className="flex-1 container py-10">
+        <div className="flex flex-col md:flex-row gap-10">
           {/* Filters Sidebar */}
-          <aside className="w-full md:w-64 space-y-6">
+          <aside className="w-full md:w-72 space-y-6">
             <div className="space-y-4">
               <h2 className="text-lg font-semibold flex items-center gap-2">
                 <Filter className="h-5 w-5" />
@@ -228,18 +227,18 @@ export default function BrowsePage() {
                   value={selectedCategory}
                   onValueChange={setSelectedCategory}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-gray-900/60 border-gray-800 text-white">
                     <SelectValue placeholder="All Categories" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Categories</SelectItem>
-                    <SelectItem value="Creative Writing">Creative Writing</SelectItem>
-                    <SelectItem value="Programming">Programming</SelectItem>
-                    <SelectItem value="Marketing">Marketing</SelectItem>
-                    <SelectItem value="Music">Music</SelectItem>
-                    <SelectItem value="Gaming">Gaming</SelectItem>
-                    <SelectItem value="Other">Other</SelectItem>
-                  </SelectContent>
+                                     <SelectContent className="bg-gray-900 border-gray-800 text-white">
+                     <SelectItem value="all">All Categories</SelectItem>
+                     <SelectItem value="Creative Writing">Creative Writing</SelectItem>
+                     <SelectItem value="Programming">Programming</SelectItem>
+                     <SelectItem value="Marketing">Marketing</SelectItem>
+                     <SelectItem value="Music">Music</SelectItem>
+                     <SelectItem value="Gaming">Gaming</SelectItem>
+                     <SelectItem value="Other">Other</SelectItem>
+                   </SelectContent>
                 </Select>
               </div>
               <div className="space-y-2">
@@ -250,42 +249,42 @@ export default function BrowsePage() {
                   max={100}
                   step={1}
                 />
-                <div className="flex justify-between text-sm text-muted-foreground">
-                  <span>{priceRange[0]} AVAX</span>
-                  <span>{priceRange[1]} AVAX</span>
-                </div>
+                                  <div className="flex justify-between text-sm text-gray-400">
+                    <span>{priceRange[0]} AVAX</span>
+                    <span>{priceRange[1]} AVAX</span>
+                  </div>
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium">Sort By</label>
-                <Select defaultValue="recent">
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="recent">Most Recent</SelectItem>
-                    <SelectItem value="popular">Most Popular</SelectItem>
-                    <SelectItem value="price-low">
-                      Price: Low to High
-                    </SelectItem>
-                    <SelectItem value="price-high">
-                      Price: High to Low
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
+                                 <Select defaultValue="recent">
+                   <SelectTrigger className="bg-gray-900/60 border-gray-800 text-white">
+                     <SelectValue />
+                   </SelectTrigger>
+                   <SelectContent className="bg-gray-900 border-gray-800 text-white">
+                     <SelectItem value="recent">Most Recent</SelectItem>
+                     <SelectItem value="popular">Most Popular</SelectItem>
+                     <SelectItem value="price-low">
+                       Price: Low to High
+                     </SelectItem>
+                     <SelectItem value="price-high">
+                       Price: High to Low
+                     </SelectItem>
+                   </SelectContent>
+                 </Select>
               </div>
             </div>
           </aside>
 
           {/* Prompts Grid */}
           <div className="flex-1 space-y-6">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               <Input
                 placeholder="Search prompts..."
-                className="max-w-md"
+                className="max-w-md bg-gray-900/60 border-gray-800 text-white placeholder:text-gray-500"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <Button>
+              <Button className="bg-primary hover:bg-primary/90">
                 <Search className="mr-2 h-4 w-4" />
                 Search
               </Button>
@@ -298,7 +297,7 @@ export default function BrowsePage() {
             ) : error ? (
               <div className="text-center text-red-500 p-4">{error}</div>
             ) : filteredPrompts.length === 0 ? (
-              <div className="text-center text-gray-500 p-4">
+              <div className="text-center text-gray-400 p-4">
                 No prompts found matching your criteria.
               </div>
             ) : (
@@ -306,7 +305,7 @@ export default function BrowsePage() {
                 {filteredPrompts.map((prompt) => (
                   <Card
                     key={prompt._id}
-                    className="group relative overflow-hidden transition-all hover:shadow-lg"
+                    className="group relative overflow-hidden transition-all hover:shadow-lg bg-gray-900 border-gray-800"
                   >
                     <div className="aspect-video relative overflow-hidden">
                       <img
@@ -342,7 +341,7 @@ export default function BrowsePage() {
                       <span className="text-lg font-bold">
                         {prompt.price} AVAX
                       </span>
-                      <Button onClick={() => openModal(prompt)}>
+                      <Button className="bg-primary hover:bg-primary/90" onClick={() => openModal(prompt)}>
                         <Eye className="mr-2 h-4 w-4" />
                         View Details
                       </Button>
@@ -356,8 +355,8 @@ export default function BrowsePage() {
 
         {/* Prompt Detail Modal */}
         {isModalOpen && selectedPrompt && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <div className="bg-background rounded-lg shadow-lg max-w-3xl w-full max-h-[90vh] overflow-auto">
+          <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+            <div className="bg-gray-950 border border-gray-800 rounded-lg shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-auto">
               <div className="p-6">
                 <div className="flex justify-between items-start mb-4">
                   <h2 className="text-2xl font-bold">{selectedPrompt.title}</h2>
@@ -390,9 +389,9 @@ export default function BrowsePage() {
                   />
                 </div>
 
-                <div className="flex items-center justify-between mb-4">
-                  <Badge>{selectedPrompt.category}</Badge>
-                  <div className="flex items-center gap-1 text-yellow-500">
+                                  <div className="flex items-center justify-between mb-4">
+                    <Badge className="bg-black/60 text-white">{selectedPrompt.category}</Badge>
+                    <div className="flex items-center gap-1 text-yellow-500">
                     <StarIcon className="h-4 w-4 fill-current" />
                     <span>{selectedPrompt.rating}</span>
                   </div>
@@ -405,15 +404,15 @@ export default function BrowsePage() {
                   </p>
                 </div>
 
-                <div className="mb-6">
-                  <h3 className="text-lg font-semibold mb-2">Seller</h3>
-                  <div className="flex items-center gap-2">
-                    <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
-                      {selectedPrompt.owner.username.charAt(0)}
+                                  <div className="mb-6">
+                    <h3 className="text-lg font-semibold mb-2">Seller</h3>
+                    <div className="flex items-center gap-2">
+                      <div className="w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center font-semibold">
+                        {selectedPrompt.owner.username.charAt(0)}
+                      </div>
+                      <span>{selectedPrompt.owner.username}</span>
                     </div>
-                    <span>{selectedPrompt.owner.username}</span>
                   </div>
-                </div>
 
                 {/* Transaction Status */}
                 {buyingPromptId === selectedPrompt.promptTokenId && (
@@ -436,6 +435,7 @@ export default function BrowsePage() {
                   </span>
                   <Button
                     size="lg"
+                    className="bg-primary hover:bg-primary/90"
                     onClick={() => buyPrompt(selectedPrompt)}
                     disabled={isBuyButtonDisabled(selectedPrompt)}
                     variant={getBuyButtonVariant(selectedPrompt)}
@@ -452,7 +452,6 @@ export default function BrowsePage() {
           </div>
         )}
       </main>
-      <Footer />
     </div>
   );
 }

@@ -3,15 +3,16 @@
 // Base URL for the API
 const API_BASE_URL = "https://secret-ai-gateway.onrender.com";
 
-// Available models
-export type AIModel = "deepseek-r1:70b" | "llama3.2-vision" | "gemini-2.5-flash";
+// Available models (Render API)
+export type AIModel = "gemini-2.5-flash" | "gemini-2.5-pro" | "gemini-2.0-flash";
+export type ImageModel = "gemini-2.0-flash-exp-image-generation" | "gemini-2.0-flash-preview-image-generation";
 
 // Function to get available models
 export async function getModels() {
 	try {
 		const response = await fetch(`${API_BASE_URL}/api/models`, {
 			headers: {
-				"X-API-Key": "bWFzdGVyQHNjcnRsYWJzLmNvbTpTZWNyZXROZXR3b3JrTWFzdGVyS2V5X18yMDI1"
+				"Accept": "application/json"
 			}
 		});
 		if (!response.ok) {
@@ -20,7 +21,7 @@ export async function getModels() {
 		return await response.json();
 	} catch (error) {
 		console.error("Error fetching models:", error);
-		return { models: ["deepseek-r1:70b", "llama3.2-vision"] }; // Fallback
+		return { models: ["gemini-2.5-flash", "gemini-2.5-pro", "gemini-2.0-flash"] };
 	}
 }
 
@@ -29,8 +30,8 @@ export async function checkHealth() {
 	try {
 		const response = await fetch(`${API_BASE_URL}/api/health`, {
 			headers: {
-				"X-API-Key": "bWFzdGVyQHNjcnRsYWJzLmNvbTpTZWNyZXROZXR3b3JrTWFzdGVyS2V5X18yMDI1"
-			}
+				Accept: "application/json",
+			},
 		});
 		return response.ok;
 	} catch (error) {
@@ -42,22 +43,18 @@ export async function checkHealth() {
 // Function to get chat response
 export async function getChatResponse(
 	prompt: string,
-	model: AIModel = "deepseek-r1:70b"
+	model: AIModel = "gemini-2.5-flash"
 ) {
 	try {
-		// Use the same format as your working test
-		const response = await fetch(
-			`${API_BASE_URL}/api/chat?prompt=${encodeURIComponent(
-				prompt
-			)}&model=${model}`,
-			{
-				method: "GET",
-				headers: {
-					Accept: "application/json",
-					// Remove the X-API-Key header since your direct test works without it
-				},
-			}
-		);
+		const q = new URLSearchParams({ prompt, model });
+		const response = await fetch(`${API_BASE_URL}/api/chat?${q.toString()}`, {
+			method: "GET",
+			headers: {
+				Accept: "application/json",
+			},
+			cache: "no-store",
+			credentials: "omit",
+		});
 
 		if (!response.ok) {
 			const errorText = await response.text();
@@ -73,112 +70,81 @@ export async function getChatResponse(
 	}
 }
 
-// Local fallback function to improve prompts if the API fails
-export function localImprovePrompt(prompt: string): string {
-	// Simple improvements
-	let improved = prompt;
-
-	// Add specificity
-	if (prompt.length < 20) {
-		improved = `${prompt} with detailed examples and step-by-step instructions`;
-	}
-
-	// Add clarity for vague prompts
-	if (!prompt.includes("?") && prompt.split(" ").length < 5) {
-		improved = `Please provide a comprehensive explanation about ${prompt}`;
-	}
-
-	// Add structure for longer prompts
-	if (
-		prompt.length > 50 &&
-		!prompt.includes("1.") &&
-		!prompt.includes("First")
-	) {
-		improved = `${prompt}\n\nPlease structure your response with:\n1. Introduction\n2. Main points\n3. Examples\n4. Conclusion`;
-	}
-
-	// If we didn't make any improvements, add a generic enhancement
-	if (improved === prompt) {
-		improved = `${prompt}\n\nPlease provide a detailed, well-structured response with examples where appropriate.`;
-	}
-
-	return improved;
-}
-
-// Function to improve a prompt using the new GET endpoint
-export async function improvePromptText(prompt: string, target: 'text' | 'image' = 'text') {
+// Generate image (GET)
+export async function generateImage(
+	prompt: string,
+	model: ImageModel = "gemini-2.0-flash-preview-image-generation"
+) {
 	try {
-		const response = await fetch(
-			`${API_BASE_URL}/api/improve-prompt?prompt=${encodeURIComponent(prompt)}&target=${target}`,
-			{
-				method: "GET",
-				headers: {
-					Accept: "application/json",
-				},
-			}
-		);
-
+		const q = new URLSearchParams({ prompt, model });
+		const response = await fetch(`${API_BASE_URL}/api/generate/image?${q.toString()}`, {
+			method: "GET",
+			headers: { Accept: "application/json" },
+			cache: "no-store",
+			credentials: "omit",
+		});
 		if (!response.ok) {
 			const errorText = await response.text();
-			console.error(`Improve prompt API error: ${response.status}`, errorText);
-			return localImprovePrompt(prompt);
+			console.error(`Generate image API error: ${response.status}`, errorText);
+			throw new Error(`Generate image API error: ${response.status}`);
 		}
-
 		const result = await response.json();
-		
-		// Handle the response format: { "response": "<improved prompt>" }
-		if (result && result.response) {
-			return result.response;
-		}
-		
-		// Fallback to local improvement if response format is unexpected
-		return localImprovePrompt(prompt);
+		return result?.response as string;
 	} catch (error) {
-		console.error("Error improving prompt:", error);
-		return localImprovePrompt(prompt);
+		console.error("Error generating image:", error);
+		throw error;
 	}
 }
-export async function improvePrompt(prompt: string) {
+
+// Improve prompt (try GET first, then fallback to POST)
+export async function improvePrompt(prompt: string, target: "text" | "image" = "text") {
+	// Try GET route
 	try {
-		// The API expects a string as the body, not a JSON object
+		const q = new URLSearchParams({ prompt, target });
+		const res = await fetch(`${API_BASE_URL}/api/improve-prompt?${q.toString()}`, {
+			method: "GET",
+			headers: { Accept: "application/json" },
+			cache: "no-store",
+			credentials: "omit",
+		});
+		if (res.ok) {
+			const result = await res.json();
+			if (typeof result === "string") return result;
+			if (result?.response) return result.response;
+			if (result?.prompt) return result.prompt;
+			if (result?.improved) return result.improved;
+		}
+	} catch (e) {
+		console.warn("GET improve-prompt failed, trying POST...");
+	}
+
+	// Fallback to POST
+	try {
 		const response = await fetch(`${API_BASE_URL}/api/improve-prompt`, {
 			method: "POST",
 			headers: {
-				"Content-Type": "text/plain", // Changed from application/json
+				"Content-Type": "application/json",
 				Accept: "application/json",
 			},
-			// Send the prompt as a plain string, not a JSON object
-			body: prompt,
+			body: JSON.stringify({ prompt, target }),
+			cache: "no-store",
+			credentials: "omit",
 		});
 
 		if (!response.ok) {
-			// Log more details about the error
 			const errorText = await response.text();
 			console.error(`Improve prompt API error: ${response.status}`, errorText);
-
-			// If the API fails, use our local improvement function
-			console.log("Using local prompt improvement fallback");
-			return localImprovePrompt(prompt);
+			return prompt;
 		}
 
 		const result = await response.json();
-
-		// If the API returns the same prompt or an empty result, use our local improvement
-		if (
-			!result ||
-			(typeof result === "string" &&
-				(result.trim() === prompt.trim() || result.trim() === "")) ||
-			(typeof result === "object" &&
-				(!result.Response || result.Response.trim() === prompt.trim()))
-		) {
-			console.log("API returned unchanged prompt, using local improvement");
-			return localImprovePrompt(prompt);
-		}
-
-		return result;
+		if (typeof result === "string") return result;
+		if (result?.response) return result.response;
+		if (result?.prompt) return result.prompt;
+		if (result?.improved) return result.improved;
+		return prompt;
 	} catch (error) {
 		console.error("Error improving prompt:", error);
-		// Use local improvement as fallback
-		return localImprovePrompt(prompt);
+		return prompt;
 	}
 }

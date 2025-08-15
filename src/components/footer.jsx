@@ -5,7 +5,7 @@ import { Twitter } from "lucide-react"
 export function Footer() {
   return (
     <footer className="border-t border-gray-800 bg-gray-950">
-      <div className="container py-10">
+      <div className="container py-12">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4">
           <div>
             <h3 className="text-lg font-semibold mb-4 text-white">About</h3>

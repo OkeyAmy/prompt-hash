@@ -5,11 +5,13 @@ import { Sidebar } from "@/components/sidebar"
 import { ChatArea } from "@/components/chat-area"
 import { ConversationDetails } from "@/components/conversation-details"
 import { getChatResponse, improvePrompt, type AIModel } from "@/lib/api"
+import ComparePanel from "@/components/compare-panel"
 
 export function ChatInterface() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isDetailsOpen, setIsDetailsOpen] = useState(true)
   const [activeTab, setActiveTab] = useState<"actions" | "customer" | "settings">("actions")
+  const [leftNavActive, setLeftNavActive] = useState<"Tasks" | "Compare">("Tasks")
   const [conversation, setConversation] = useState<Message[]>([
     {
       id: "1",
@@ -22,7 +24,7 @@ export function ChatInterface() {
 
   const [customerName, setCustomerName] = useState("GS")
   const [isTyping, setIsTyping] = useState(false)
-  const [selectedModel, setSelectedModel] = useState<AIModel>("deepseek-r1:70b")
+  const [selectedModel, setSelectedModel] = useState<AIModel>("gemini-2.5-flash")
   const [inputValue, setInputValue] = useState("")
 
   // Handle sending a message
@@ -167,31 +169,40 @@ export function ChatInterface() {
   }
 
   return (
-    <div className="flex w-full h-screen bg-gradient-to-r from-purple-400 to-blue-500 overflow-hidden">
+    <div className="flex w-full h-[calc(100vh-4rem)] bg-gray-950 overflow-hidden">
       {/* Sidebar */}
       <Sidebar
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
         onToggleMobileMenu={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        activeLabel={leftNavActive}
+        onSelect={(label) => setLeftNavActive(label === "Compare" ? "Compare" : "Tasks")}
       />
 
       {/* Main Chat Area */}
       <div className="flex flex-1 flex-col md:flex-row h-full ">
-        <ChatArea
-          conversation={conversation}
-          isTyping={isTyping}
-          customerName={customerName}
-          onSendMessage={handleSendMessage}
-          onImprovePrompt={handleImprovePrompt}
-          onReaction={handleReaction}
-          onSaveConversation={handleSaveConversation}
-          onCloseConversation={handleCloseConversation}
-          inputValue={inputValue}
-          setInputValue={setInputValue}
-          selectedModel={selectedModel}
-          setSelectedModel={setSelectedModel}
-          onToggleDetails={() => setIsDetailsOpen(!isDetailsOpen)}
-        />
+        {/* Center content switches based on leftNavActive */}
+        <div className="flex-1 flex">
+          {leftNavActive === "Tasks" ? (
+            <ChatArea
+              conversation={conversation}
+              isTyping={isTyping}
+              customerName={customerName}
+              onSendMessage={handleSendMessage}
+              onImprovePrompt={handleImprovePrompt}
+              onReaction={handleReaction}
+              onSaveConversation={handleSaveConversation}
+              onCloseConversation={handleCloseConversation}
+              inputValue={inputValue}
+              setInputValue={setInputValue}
+              selectedModel={selectedModel}
+              setSelectedModel={setSelectedModel}
+              onToggleDetails={() => setIsDetailsOpen(!isDetailsOpen)}
+            />
+          ) : (
+            <ComparePanel />
+          )}
+        </div>
 
         {/* Conversation Details */}
         <ConversationDetails
