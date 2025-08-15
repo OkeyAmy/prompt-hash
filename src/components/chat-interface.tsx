@@ -204,7 +204,8 @@ export function ChatInterface() {
           )}
         </div>
 
-        {/* Conversation Details */}
+        {/* Conversation Details - hidden on chat route per request */}
+        {/**
         <ConversationDetails
           isOpen={isDetailsOpen}
           activeTab={activeTab}
@@ -212,6 +213,7 @@ export function ChatInterface() {
           customerName={customerName}
           onClose={() => setIsDetailsOpen(false)}
         />
+        **/}
       </div>
     </div>
   )
