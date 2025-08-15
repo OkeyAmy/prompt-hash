@@ -140,8 +140,9 @@ export function ChatArea({
 						onChange={(e) => setSelectedModel(e.target.value as AIModel)}
 						className="text-xs sm:text-sm border rounded-md py-1 px-1 sm:px-2 bg-gray-900/60 border-gray-800 text-foreground focus:ring-2 focus:ring-purple-600 focus:border-purple-600"
 					>
-						<option value="deepseek-r1:70b">deepseek-r1:70b</option>
-						<option value="llama3.2-vision">llama3.2-vision</option>
+											<option value="gemini-2.5-flash">gemini-2.5-flash</option>
+					<option value="gemini-2.5-pro">gemini-2.5-pro</option>
+					<option value="gemini-2.0-flash">gemini-2.0-flash</option>
 					</select>
 					<Button
 						variant="outline"

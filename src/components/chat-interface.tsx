@@ -24,7 +24,7 @@ export function ChatInterface() {
 
   const [customerName, setCustomerName] = useState("GS")
   const [isTyping, setIsTyping] = useState(false)
-  const [selectedModel, setSelectedModel] = useState<AIModel>("deepseek-r1:70b")
+  const [selectedModel, setSelectedModel] = useState<AIModel>("gemini-2.5-flash")
   const [inputValue, setInputValue] = useState("")
 
   // Handle sending a message
