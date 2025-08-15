@@ -14,7 +14,7 @@ Our vision is to become the go-to resource where creators and users converge—l
 - 🔍 **Browse & Discover**: Explore curated collections of AI prompts from top creators
 - 💰 **Buy & Sell Prompts**: Monetize your expertise or find the perfect prompt
 - 🤖 **Advanced AI Integration**: Powered by Secret Network AI models including DeepSeek R1 (70B) and Llama 3.2 Vision
-- 🔒 **Blockchain Security**: Built on Secret Network's privacy-preserving infrastructure
+- 🔒 **Blockchain Security**: Built on Avalanche Blockchain
 - 💬 **Conversational AI**: Maintain chat sessions with context awareness.
 - 🏛️ **Governance**: Community-driven platform development
 - ✨ **Prompt Engineering**: Tools to improve and optimize AI prompts.
@@ -43,11 +43,10 @@ Our vision is to become the go-to resource where creators and users converge—l
 
 - **Frontend**: Next.js, React, Tailwind CSS
 - **Backend**: FastAPI (for API endpoints)
-- **AI Integration**: Secret Network AI API
+- **AI Integration**: Google Gemini AI API
 - **Authentication**: Wallet Connect for blockchain integration
 - **Server**: Uvicorn as the ASGI server
-- **Blockchain**: Avalanche Blockchain for privacy-preserving operations
-- **Icons & UI**: Lucide for icon components
+- **Blockchain**: Avalanche Blockchain 
 
 
 ## Prerequisites
@@ -55,7 +54,6 @@ Our vision is to become the go-to resource where creators and users converge—l
 - Python 3.12.0
 - Secret AI API Key
 - Node.js 18+ and npm
-- Secret AI API Key
 - Web browser with wallet extension (for blockchain features)
 
 
@@ -63,7 +61,7 @@ Our vision is to become the go-to resource where creators and users converge—l
 
 ### Clone the Repository:
 ```sh
-git clone https://github.com/OkeyAmy/PromptHash
+git clone https://github.com/obiajulu-gif/PromptHash
 cd PromptHash
 ```
 
@@ -190,37 +188,7 @@ response = requests.post(
 print(response.json())
 ```
 
-## Deployment on Render
 
-### Automatic Deployment
-1. Create a new Render account or sign in at [dashboard.render.com](https://dashboard.render.com).
-2. Click on the "New +" button and select "Blueprint".
-3. Connect your GitHub or GitLab account and select your repository.
-4. Render will detect the `render.yaml` file and set up your service automatically with the required environment variables.
-
-### Manual Deployment
-1. Create a new Web Service on Render.
-2. Connect your repository.
-3. Use the following settings:
-   - **Environment**: Python 3
-   - **Build Command**: `pip install -r requirements.txt`
-   - **Start Command**: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
-4. Add the environment variable:
-   - **Key**: `SECRET_AI_API_KEY`
-   - **Value**: `your_api_key_here`
-
-Your API will be available at your Render URL once deployment is complete.
-
-## Configuration
-
-The API’s configuration is managed through environment variables and the `app/config.py` file:
-
-| Variable           | Description                                       | Default                           |
-|--------------------|---------------------------------------------------|-----------------------------------|
-| SECRET_AI_API_KEY  | API key for Secret Network AI                     | Pre-configured in `render.yaml`   |
-| API_KEY            | Optional API key for authentication               | `frontend-access-key-2025`        |
-| CORS_ORIGINS       | Allowed origins for CORS                          | `[*]` (All origins)               |
-| ENVIRONMENT        | Current environment (production/dev)              | `production`                      |
 
 ## Project Structure
 ```
@@ -239,8 +207,6 @@ PromptHash/
 ## Dependencies
 Key dependencies include:
 - **FastAPI**: Fast web framework for building APIs.
-- **Pydantic**: Data validation and settings management.
-- **Secret AI SDK**: Official SDK for interacting with Secret Network AI models.
 - **Uvicorn**: ASGI server for running the API.
 - **React, Next.js & Tailwind CSS**: For a responsive and intuitive frontend.
 - **Lucide**: Icon library for UI components.
