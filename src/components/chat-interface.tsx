@@ -169,7 +169,7 @@ export function ChatInterface() {
   }
 
   return (
-    <div className="flex w-full h-[calc(100vh-4rem)] bg-gray-950 overflow-hidden">
+    <div className="flex w-full h-screen bg-gradient-to-r from-purple-400 to-blue-500 overflow-hidden">
       {/* Sidebar */}
       <Sidebar
         isOpen={isMobileMenuOpen}
@@ -204,8 +204,7 @@ export function ChatInterface() {
           )}
         </div>
 
-        {/* Conversation Details - hidden on chat route per request */}
-        {/**
+        {/* Conversation Details - visible like PromptNode */}
         <ConversationDetails
           isOpen={isDetailsOpen}
           activeTab={activeTab}
@@ -213,7 +212,6 @@ export function ChatInterface() {
           customerName={customerName}
           onClose={() => setIsDetailsOpen(false)}
         />
-        **/}
       </div>
     </div>
   )

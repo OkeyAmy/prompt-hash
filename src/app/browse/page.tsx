@@ -27,6 +27,7 @@ import { useAccount, useWaitForTransactionReceipt } from "wagmi";
 import { useWriteContract } from "wagmi";
 import { contractAddress, ABI } from "@/web3/PromptHash";
 import { ethers } from "ethers";
+import { Footer } from "@/components/footer";
 
 interface Prompt {
   _id: string;
@@ -210,27 +211,27 @@ export default function BrowsePage() {
   });
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-950 text-foreground">
+    <div className="min-h-screen bg-gray-950 bg-gradient-to-r from-purple-400 to-blue-500 flex flex-col">
       <Navigation />
-      <main className="flex-1 container py-10">
+      <main className="flex-1 container py-8">
         <div className="flex flex-col md:flex-row gap-10">
           {/* Filters Sidebar */}
-          <aside className="w-full md:w-72 space-y-6">
+          <aside className="w-full md:w-72 space-y-6 bg-white/90 backdrop-blur-sm rounded-lg p-6 shadow-lg">
             <div className="space-y-4">
-              <h2 className="text-lg font-semibold flex items-center gap-2">
-                <Filter className="h-5 w-5" />
+              <h2 className="text-lg font-semibold flex items-center gap-2 text-gray-900">
+                <Filter className="h-5 w-5 text-blue-600" />
                 Filters
               </h2>
               <div className="space-y-2">
-                <label className="text-sm font-medium">Category</label>
+                <label className="text-sm font-medium text-gray-900">Category</label>
                 <Select
                   value={selectedCategory}
                   onValueChange={setSelectedCategory}
                 >
-                  <SelectTrigger className="bg-gray-900/60 border-gray-800 text-white">
+                                    <SelectTrigger className="bg-white border-gray-300 text-gray-900">
                     <SelectValue placeholder="All Categories" />
                   </SelectTrigger>
-                                     <SelectContent className="bg-gray-900 border-gray-800 text-white">
+                  <SelectContent className="bg-white border-gray-200 text-gray-900">
                      <SelectItem value="all">All Categories</SelectItem>
                      <SelectItem value="Creative Writing">Creative Writing</SelectItem>
                      <SelectItem value="Programming">Programming</SelectItem>
@@ -242,25 +243,25 @@ export default function BrowsePage() {
                 </Select>
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-medium">Price Range (AVAX)</label>
+                <label className="text-sm font-medium text-gray-900">Price Range (AVAX)</label>
                 <Slider
                   value={priceRange}
                   onValueChange={setPriceRange}
                   max={100}
                   step={1}
                 />
-                                  <div className="flex justify-between text-sm text-gray-400">
+                                  <div className="flex justify-between text-sm text-gray-600">
                     <span>{priceRange[0]} AVAX</span>
                     <span>{priceRange[1]} AVAX</span>
                   </div>
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-medium">Sort By</label>
+                <label className="text-sm font-medium text-gray-900">Sort By</label>
                                  <Select defaultValue="recent">
-                   <SelectTrigger className="bg-gray-900/60 border-gray-800 text-white">
+                   <SelectTrigger className="bg-white border-gray-300 text-gray-900">
                      <SelectValue />
                    </SelectTrigger>
-                   <SelectContent className="bg-gray-900 border-gray-800 text-white">
+                   <SelectContent className="bg-white border-gray-200 text-gray-900">
                      <SelectItem value="recent">Most Recent</SelectItem>
                      <SelectItem value="popular">Most Popular</SelectItem>
                      <SelectItem value="price-low">
@@ -277,14 +278,14 @@ export default function BrowsePage() {
 
           {/* Prompts Grid */}
           <div className="flex-1 space-y-6">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 bg-white/90 backdrop-blur-sm rounded-lg p-4 shadow-lg">
               <Input
                 placeholder="Search prompts..."
-                className="max-w-md bg-gray-900/60 border-gray-800 text-white placeholder:text-gray-500"
+                className="max-w-md bg-white border-gray-300 text-gray-900 placeholder:text-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <Button className="bg-primary hover:bg-primary/90">
+              <Button className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white">
                 <Search className="mr-2 h-4 w-4" />
                 Search
               </Button>
@@ -356,13 +357,13 @@ export default function BrowsePage() {
         {/* Prompt Detail Modal */}
         {isModalOpen && selectedPrompt && (
           <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-            <div className="bg-gray-950 border border-gray-800 rounded-lg shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-auto">
+            <div className="bg-white border border-gray-200 rounded-lg shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-auto">
               <div className="p-6">
                 <div className="flex justify-between items-start mb-4">
-                  <h2 className="text-2xl font-bold">{selectedPrompt.title}</h2>
+                  <h2 className="text-2xl font-bold text-gray-900">{selectedPrompt.title}</h2>
                   <button
                     onClick={closeModal}
-                    className="text-muted-foreground hover:text-foreground"
+                    className="text-gray-500 hover:text-gray-700"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -398,19 +399,19 @@ export default function BrowsePage() {
                 </div>
 
                 <div className="mb-4">
-                  <h3 className="text-lg font-semibold mb-2">Description</h3>
-                  <p className="text-muted-foreground">
+                  <h3 className="text-lg font-semibold mb-2 text-gray-900">Description</h3>
+                  <p className="text-gray-600">
                     {selectedPrompt.content}
                   </p>
                 </div>
 
                                   <div className="mb-6">
-                    <h3 className="text-lg font-semibold mb-2">Seller</h3>
+                    <h3 className="text-lg font-semibold mb-2 text-gray-900">Seller</h3>
                     <div className="flex items-center gap-2">
-                      <div className="w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center font-semibold">
+                      <div className="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-semibold">
                         {selectedPrompt.owner.username.charAt(0)}
                       </div>
-                      <span>{selectedPrompt.owner.username}</span>
+                      <span className="text-gray-900">{selectedPrompt.owner.username}</span>
                     </div>
                   </div>
 
@@ -430,12 +431,12 @@ export default function BrowsePage() {
                 )}
 
                 <div className="flex justify-between items-center">
-                  <span className="text-2xl font-bold">
+                  <span className="text-2xl font-bold text-gray-900">
                     {selectedPrompt.price} AVAX
                   </span>
                   <Button
                     size="lg"
-                    className="bg-primary hover:bg-primary/90"
+                    className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
                     onClick={() => buyPrompt(selectedPrompt)}
                     disabled={isBuyButtonDisabled(selectedPrompt)}
                     variant={getBuyButtonVariant(selectedPrompt)}
@@ -452,6 +453,7 @@ export default function BrowsePage() {
           </div>
         )}
       </main>
+      <Footer />
     </div>
   );
 }
